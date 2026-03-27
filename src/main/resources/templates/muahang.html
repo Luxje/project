@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Mua hàng</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body { background: #f8f9fa; }
+        .card { border-radius: 15px; }
+        .btn-buy {
+            background: #ff6b81;
+            color: white;
+            border-radius: 25px;
+        }
+        .btn-buy:hover { background: #ff4757; }
+    </style>
+</head>
+
+<body>
+
+<div class="container mt-5 d-flex justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow p-4">
+
+            <h4 class="text-center mb-4">Thông Tin Mua Hàng</h4>
+
+            <form action="/xacnhan" method="post">
+                <input type="hidden" name="total" id="totalRaw">
+
+                <input type="hidden" name="id" th:value="${sp.id}">
+
+                <!-- Tên -->
+                <div class="mb-3">
+                    <label class="form-label">Tên sản phẩm</label>
+                    <input type="text" class="form-control"
+                           th:value="${sp.name}" readonly>
+                </div>
+
+                <!-- Giá -->
+                <div class="mb-3">
+                    <label class="form-label">Giá</label>
+                    <input type="text" id="price" class="form-control"
+                           th:value="${sp.price}" readonly>
+                </div>
+
+                <!-- Trạng thái -->
+                <div class="mb-3">
+                    <label class="form-label">Trạng thái</label><br>
+                    <span th:if="${sp.status}" class="text-success fw-bold">Còn hàng</span>
+                    <span th:if="${!sp.status}" class="text-danger fw-bold">Hết hàng</span>
+                </div>
+
+                <!-- Số lượng -->
+                <div class="mb-3">
+                    <label class="form-label">Số lượng</label>
+                    <input type="number" id="quantity" name="quantity"
+                           class="form-control" min="1" value="1" required>
+                </div>
+
+                <!-- Voucher -->
+                <div class="mb-3">
+                    <label class="form-label">Phiếu giảm giá</label>
+                    <select id="voucher" name="voucherId" class="form-control">
+                        <option value="0" data-discount="0">Không áp dụng</option>
+
+                        <option th:each="v : ${vouchers}"
+                                th:value="${v.id}"
+                                th:data-discount="${v.value}"
+                                th:text="${v.name} + ' - ' + ${v.value} + '%'">
+                        </option>
+                    </select>
+                </div>
+
+                <!-- Tổng tiền -->
+                <div class="mb-3">
+                    <label class="form-label">Tổng tiền</label>
+                    <input type="text" name="total" id="total" class="form-control" readonly>
+                </div>
+
+                <hr>
+
+                <h5 class="mb-3">Thông tin khách hàng</h5>
+
+                <div class="mb-3">
+                    <label class="form-label">Tên khách hàng</label>
+                    <input type="text" name="customerName" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Giới tính</label><br>
+                    <input type="radio" name="gender" value="true" checked> Nam
+                    <input type="radio" name="gender" value="false" class="ms-3"> Nữ
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">SĐT</label>
+                    <input type="text" name="phone" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Địa chỉ</label>
+                    <input type="text" name="address" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Vai trò</label>
+                    <select name="role" class="form-control">
+                        <option value="CUSTOMER">Customer</option>
+                    </select>
+                </div>
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-buy px-4">
+                        Xác nhận mua
+                    </button>
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+</div>
+
+<script>
+    function updateTotal() {
+        let quantity = parseInt(document.getElementById("quantity").value) || 0;
+        let price = parseFloat(document.getElementById("price").value) || 0;
+        let voucher = document.getElementById("voucher");
+        let discount = 0;
+
+        if (voucher && voucher.selectedIndex >= 0) {
+            discount = parseFloat(voucher.options[voucher.selectedIndex].dataset.discount) || 0;
+        }
+
+        let total = price * quantity;
+        total = total * (1 - discount / 100);   // Cách viết rõ ràng hơn
+
+        // Hiển thị tổng tiền có định dạng tiếng Việt
+        document.getElementById("total").value =
+            total.toLocaleString('vi-VN') + " đ";
+
+        // Giá trị thô gửi lên server (không có "đ" và dấu chấm)
+        document.getElementById("totalRaw").value = Math.round(total);
+    }
+
+    // ====================== GẮN SỰ KIỆN ======================
+    document.addEventListener("DOMContentLoaded", function() {
+        const quantityInput = document.getElementById("quantity");
+        const voucherSelect = document.getElementById("voucher");
+
+        // Cập nhật khi thay đổi số lượng
+        quantityInput.addEventListener("input", updateTotal);
+        quantityInput.addEventListener("change", updateTotal);
+
+        // Cập nhật khi chọn voucher
+        voucherSelect.addEventListener("change", updateTotal);
+
+        // Chạy lần đầu khi trang load
+        updateTotal();
+    });
+</script>
+
+</body>
+</html>
