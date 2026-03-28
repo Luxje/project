@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import vn.fpoly.project.Service.UserService;
 
 @Controller
-@RequestMapping("/user")
 public class UserController {
     final private UserService userService;
 
