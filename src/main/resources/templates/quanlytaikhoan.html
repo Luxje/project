@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - Quản lý Tài khoản</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #fff4f6;
+    }
+
+    header {
+      background: #ff7b9c;
+      color: white;
+      padding: 15px;
+      text-align: center;
+      font-size: 22px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .container {
+      display: flex;
+      padding: 20px;
+      gap: 20px;
+    }
+
+    /* FORM BOX */
+    .form-box {
+      width: 30%;
+      background: white;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      height: fit-content;
+    }
+
+    .form-box h3 {
+      color: #ff7b9c;
+      margin-top: 0;
+      margin-bottom: 15px;
+    }
+
+    .form-box input, .form-box select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 12px;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+      box-sizing: border-box; /* Giúp padding không làm tràn chiều rộng */
+    }
+
+    .form-box button {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      background: #ff7b9c;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .form-box button:hover {
+      background: #ff5f87;
+    }
+
+    /* TABLE BOX */
+    .table-box {
+      width: 70%;
+      background: white;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .table-box h3 {
+      color: #ff7b9c;
+      margin-top: 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    table th {
+      background: #ffe0e9;
+      color: #ff5f87;
+      padding: 12px;
+      text-align: left;
+    }
+
+    table td {
+      padding: 12px;
+      border-bottom: 1px solid #eee;
+    }
+
+    /* BADGE ROLE */
+    .badge {
+      padding: 4px 8px;
+      border-radius: 5px;
+      font-size: 12px;
+      color: white;
+    }
+    .admin-role { background: #6c757d; }
+    .user-role { background: #17a2b8; }
+
+    /* BUTTONS */
+    .btn {
+      padding: 6px 12px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 13px;
+    }
+
+    .edit {
+      background: #ffc107;
+      color: #333;
+    }
+
+    .delete {
+      background: #dc3545;
+      color: white;
+    }
+
+    .edit:hover { background: #e0a800; }
+    .delete:hover { background: #c82333; }
+
+  </style>
+</head>
+<body>
+
+<header> Admin - Quản lý Tài khoản Người dùng</header>
+
+<div class="container">
+
+  <div class="form-box">
+    <h3>Thêm / Sửa thành viên</h3>
+
+    <form action="/admin/account/save" method="post">
+      <input type="hidden" name="userId">
+
+      <label style="font-size: 14px; color: #666;">Tên đăng nhập</label>
+      <input type="text" name="username" placeholder="Ví dụ: teddy_lover">
+
+      <label style="font-size: 14px; color: #666;">Họ và tên</label>
+      <input type="text" name="fullname" placeholder="Nguyễn Văn A">
+
+      <label style="font-size: 14px; color: #666;">Email</label>
+      <input type="email" name="email" placeholder="example@gmail.com">
+
+      <label style="font-size: 14px; color: #666;">Mật khẩu</label>
+      <input type="password" name="password" placeholder="********">
+
+      <label style="font-size: 14px; color: #666;">Vai trò</label>
+      <select name="role">
+        <option value="USER">Khách hàng</option>
+        <option value="ADMIN">Quản trị viên</option>
+      </select>
+
+      <button type="submit">Lưu thông tin</button>
+    </form>
+  </div>
+
+  <div class="table-box">
+    <h3>Danh sách thành viên</h3>
+
+    <table>
+      <thead>
+      <tr>
+        <th>Username</th>
+        <th>Họ tên</th>
+        <th>Email</th>
+        <th>Vai trò</th>
+        <th style="text-align: center;">Hành động</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td><strong>admin_cute</strong></td>
+        <td>Quản trị viên</td>
+        <td>admin@teddyshop.com</td>
+        <td><span class="badge admin-role">ADMIN</span></td>
+        <td style="text-align: center;">
+          <button class="btn edit">Sửa</button>
+          <button class="btn delete">Xoá</button>
+        </td>
+      </tr>
+      <tr>
+        <td>nguyenvana</td>
+        <td>Nguyễn Văn A</td>
+        <td>vana@gmail.com</td>
+        <td><span class="badge user-role">USER</span></td>
+        <td style="text-align: center;">
+          <button class="btn edit">Sửa</button>
+          <button class="btn delete">Xoá</button>
+        </td>
+      </tr>
+      <tr>
+        <td>tranthib</td>
+        <td>Trần Thị B</td>
+        <td>thib@yahoo.com</td>
+        <td><span class="badge user-role">USER</span></td>
+        <td style="text-align: center;">
+          <button class="btn edit">Sửa</button>
+          <button class="btn delete">Xoá</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+</body>
+</html>
