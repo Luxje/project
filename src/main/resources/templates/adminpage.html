@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+    <meta charset="UTF-8">
+    <title>Admin - Teddy Shop</title>
+
+    <style>
+        body { margin:0; font-family: Arial; display:flex; background:#fff4f6; }
+
+        .sidebar {
+            width:230px; height:100vh;
+            background:#ff7b9c; color:white; position:fixed;
+        }
+
+        .sidebar a {
+            display:block; padding:12px;
+            color:white; text-decoration:none;
+        }
+
+        .sidebar a:hover { background:#ff5f87; }
+
+        .main { margin-left:230px; width:100%; padding:20px; }
+
+        .card {
+            background:white; padding:20px;
+            border-radius:15px;
+            box-shadow:0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        table { width:100%; margin-top:10px; border-collapse: collapse; }
+        th { background:#ffe0e9; padding:10px; }
+        td { padding:10px; border-bottom:1px solid #eee; text-align:center; }
+
+        input { padding:8px; margin:5px; }
+
+        .btn { padding:5px 10px; border-radius:8px; text-decoration:none; }
+        .add { background:green; color:white; }
+        .edit { background:orange; }
+        .delete { background:red; color:white; }
+    </style>
+</head>
+
+<body>
+
+<div class="sidebar">
+    <a th:href="@{/admin/product}">Sản phẩm</a>
+    <a th:href="@{/admin/invoice}">Hóa đơn</a>
+    <a th:href="@{/admin/voucher}">Voucher</a>
+    <a th:href="@{/admin/account}">Tài khoản</a>
+    <a th:href="@{/admin/staff}">Nhân viên</a>
+</div>
+
+<div class="main">
+
+    <!-- ================= PRODUCT ================= -->
+    <div class="card">
+        <h3>Quản lý sản phẩm</h3>
+
+        <!-- FORM -->
+        <form th:action="@{/admin/product/save}" method="post" th:object="${product}">
+
+            <input type="hidden" th:field="*{id}">
+
+            <input type="text" th:field="*{name}" placeholder="Tên">
+
+            <input type="number" th:field="*{price}" placeholder="Giá">
+
+            <input type="number" th:field="*{quantity}" placeholder="Số lượng">
+
+            <label>
+                <input type="radio" th:field="*{status}" value="true"> Còn hàng
+            </label>
+
+            <label>
+                <input type="radio" th:field="*{status}" value="false"> Hết hàng
+            </label>
+
+            <button class="btn add">Lưu</button>
+        </form>
+
+        <!-- TABLE -->
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Tên</th>
+                <th>Giá</th>
+                <th>Action</th>
+            </tr>
+
+            <tr th:each="p : ${listProduct}">
+                <td th:text="${p.id}"></td>
+                <td th:text="${p.name}"></td>
+                <td th:text="${p.price}"></td>
+                <td th:text="${p.status ? 'còn hàng':'hết hàng'}"></td>
+                <td>
+                    <a th:href="@{/admin/product/edit/{id}(id=${p.id})}" class="btn edit">Sửa</a>
+                    <a th:href="@{/admin/product/delete/{id}(id=${p.id})}" class="btn delete">Xóa</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+</div>
+
+</body>
+</html>

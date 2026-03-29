@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - Teddy Shop</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #ffd6e0, #ffe9c7);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            width: 320px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .login-container h2 {
+            margin-bottom: 10px;
+            color: #ff7b9c;
+        }
+
+        .login-container p {
+            font-size: 14px;
+            color: #888;
+            margin-bottom: 25px;
+        }
+
+        .login-container input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .login-container input:focus {
+            border-color: #ff7b9c;
+        }
+
+        .login-container button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 10px;
+            background: #ff7b9c;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .login-container button:hover {
+            background: #ff5f87;
+        }
+
+        .bear {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="login-container">
+    <div class="bear">🧸</div>
+    <h2>Teddy Shop</h2>
+    <p>Đăng nhập để mua gấu bông siêu cute</p>
+
+    <form action="/user/login" method="post">
+        <input type="text" name="phone" placeholder="Số điện thoại">
+        <input type="password" name="password" placeholder="Mật khẩu">
+        <button type="submit">Đăng nhập</button>
+    </form>
+</div>
+
+</body>
+</html>
