@@ -5,8 +5,8 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>4.0.4</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <version>3.4.3</version>
+        <relativePath/>
     </parent>
     <groupId>vn.fpoly</groupId>
     <artifactId>project</artifactId>
@@ -44,26 +44,22 @@
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
 
-        <!-- Spring Data JPA -->
-        <!--        <dependency>-->
-        <!--            <groupId>org.springframework.boot</groupId>-->
-        <!--            <artifactId>spring-boot-starter-data-jpa</artifactId>-->
-        <!--        </dependency>-->
+                <dependency>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-data-jpa</artifactId>
+                </dependency>
 
-        <!-- SQL Server Driver -->
-        <!--        <dependency>-->
-        <!--            <groupId>com.microsoft.sqlserver</groupId>-->
-        <!--            <artifactId>mssql-jdbc</artifactId>-->
-        <!--            <scope>runtime</scope>-->
-        <!--        </dependency>-->
+                <dependency>
+                    <groupId>com.microsoft.sqlserver</groupId>
+                    <artifactId>mssql-jdbc</artifactId>
+                    <scope>runtime</scope>
+                </dependency>
 
-        <!-- Spring Security -->
-        <!--        <dependency>-->
-        <!--            <groupId>org.springframework.boot</groupId>-->
-        <!--            <artifactId>spring-boot-starter-security</artifactId>-->
-        <!--        </dependency>-->
+<!--                <dependency>-->
+<!--                    <groupId>org.springframework.boot</groupId>-->
+<!--                    <artifactId>spring-boot-starter-security</artifactId>-->
+<!--                </dependency>-->
 
-        <!-- DevTools -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
@@ -89,6 +85,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.tomlj</groupId>
+            <artifactId>tomlj</artifactId>
+            <version>1.0.0</version>
         </dependency>
 
     </dependencies>

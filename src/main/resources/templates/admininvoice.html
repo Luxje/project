@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Invoice</title>
+
+    <style>
+        body {
+            margin:0;
+            font-family: 'Segoe UI', sans-serif;
+            display:flex;
+            background: linear-gradient(135deg, #fff0f5, #ffe4ec);
+        }
+
+
+         {
+            width:240px;
+            height:100vh;
+            background: linear-gradient(180deg, #ff9eb5, #ff6f91);
+            color:white;
+            position:fixed;
+            padding-top:20px;
+            box-shadow: 3px 0 10px rgba(0,0,0,0.1);
+        }
+
+        .sidebar a {
+            display:block;
+            padding:12px 20px;
+            color:white;
+            text-decoration:none;
+            border-radius:10px;
+            margin:5px 10px;
+            transition:0.3s;
+        }
+
+        .sidebar a:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateX(5px);
+        }
+
+        /* MAIN */
+        .main {
+            margin-left:240px;
+            width:100%;
+            padding:25px;
+        }
+
+        /* CARD */
+        .card {
+            background:white;
+            padding:20px;
+            border-radius:20px;
+            box-shadow:0 8px 20px rgba(255, 105, 135, 0.2);
+            margin-bottom:25px;
+        }
+
+        h3 {
+            color:#ff6f91;
+        }
+
+        /* INPUT */
+        input {
+            padding:10px;
+            margin:6px;
+            border-radius:10px;
+            border:1px solid #ffd1dc;
+            outline:none;
+            transition:0.2s;
+        }
+
+        input:focus {
+            border-color:#ff6f91;
+            box-shadow:0 0 5px #ffb6c1;
+        }
+
+        /* BUTTON */
+        .btn {
+            padding:6px 12px;
+            border-radius:10px;
+            text-decoration:none;
+            font-size:14px;
+            transition:0.2s;
+        }
+
+        .add {
+            background:#ff85a2;
+            color:white;
+            border:none;
+            cursor:pointer;
+        }
+
+        .add:hover {
+            background:#ff5f87;
+        }
+
+        .edit {
+            background:#ffc75f;
+            color:black;
+        }
+
+        .edit:hover {
+            background:#ffb347;
+        }
+
+        .delete {
+            background:#ff6f91;
+            color:white;
+        }
+
+        .delete:hover {
+            background:#e25578;
+        }
+
+        /* TABLE */
+        table {
+            width:100%;
+            margin-top:15px;
+            border-collapse: collapse;
+            border-radius:10px;
+            overflow:hidden;
+        }
+
+        th {
+            background:#ffe0e9;
+            padding:12px;
+            color:#d6336c;
+        }
+
+        td {
+            padding:10px;
+            border-bottom:1px solid #f5c2c7;
+            text-align:center;
+        }
+
+        tr:hover {
+            background:#fff0f5;
+        }
+    </style>
+
+</head>
+<body>
+
+<h2>Quản lý hóa đơn</h2>
+<a th:href="@{/admin/page}">back to home</a>
+
+<!-- TABLE -->
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Tên</th>
+        <th>Tổng tiền</th>
+        <th>Voucher</th>
+        <th>Staff</th>
+        <th>Ngày</th>
+        <th>Customer</th>
+        <th>Hành động</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr th:each="i : ${listInvoice}">
+        <td th:text="${i.id}"></td>
+        <td th:text="${i.name}"></td>
+        <td th:text="${i.price}"></td>
+        <td th:text="${i.voucher}"></td>
+        <td th:text="${i.staffid}"></td>
+        <td th:text="${i.date}"></td>
+        <td th:text="${i.customerid}"></td>
+
+        <td>
+            <a class="delete" th:href="@{/admin/invoice/delete/{id}(id=${i.id})}">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
