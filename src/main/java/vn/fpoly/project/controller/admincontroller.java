@@ -21,8 +21,17 @@ import java.util.List;
 @RequestMapping("/admin")
 public class admincontroller {
 
-    @Autowired
-    productRepo repo;
+    final private productRepo repo;
+    final private userRepo urepo;
+    final private invoicesRepo repoinvoice;
+    final private voucherRepo vrepo;
+
+    public admincontroller(productRepo repo, invoicesRepo repoinvoice, voucherRepo vrepo, userRepo urepo) {
+        this.repo = repo;
+        this.repoinvoice = repoinvoice;
+        this.vrepo = vrepo;
+        this.urepo = urepo;
+    }
 
     @GetMapping("/page")
     public String page(Model model) {
@@ -49,8 +58,6 @@ public class admincontroller {
         return "redirect:/admin/page";
     }
 
-    @Autowired
-    invoicesRepo repoinvoice;
 
     @GetMapping("/invoice")
     public String invoicepage(Model model) {
@@ -58,11 +65,8 @@ public class admincontroller {
         model.addAttribute("invoice", new invoices());
         return "admininvoice";
     }
-    @Autowired
-    voucherRepo vrepo;
+    
 
-    @Autowired
-    userRepo urepo;
     @GetMapping("/staff")
     public String staff(Model model){
         List list = new ArrayList();
@@ -93,4 +97,5 @@ public class admincontroller {
         urepo.deleteById(id);
         return "redirect:/admin/staff";
     }
+
 }

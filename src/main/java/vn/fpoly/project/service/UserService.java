@@ -1,4 +1,4 @@
-package vn.fpoly.project.Service;
+package vn.fpoly.project.service;
 
 
 import org.springframework.stereotype.Service;
