@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản lý nhân viên</title>
+
+    <style>
+        body {
+            margin:0;
+            font-family:'Segoe UI', sans-serif;
+            display:flex;
+            background: linear-gradient(135deg, #fff0f5, #ffe4ec);
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            width:240px;
+            height:100vh;
+            background: linear-gradient(180deg, #ff9eb5, #ff6f91);
+            color:white;
+            position:fixed;
+            padding-top:20px;
+        }
+
+        .sidebar a {
+            display:block;
+            padding:12px 20px;
+            color:white;
+            text-decoration:none;
+            border-radius:10px;
+            margin:5px 10px;
+        }
+
+        .sidebar a:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        /* MAIN */
+        .main {
+            margin-left:240px;
+            width:100%;
+            padding:25px;
+        }
+
+        /* CARD */
+        .card {
+            background:white;
+            padding:20px;
+            border-radius:20px;
+            box-shadow:0 8px 20px rgba(255,105,135,0.2);
+        }
+
+        h3 {
+            color:#ff6f91;
+        }
+
+        input {
+            padding:10px;
+            margin:6px;
+            border-radius:10px;
+            border:1px solid #ffd1dc;
+        }
+
+        .btn {
+            padding:6px 12px;
+            border-radius:10px;
+            text-decoration:none;
+        }
+
+        .add {
+            background:#ff85a2;
+            color:white;
+            border:none;
+        }
+
+        .edit {
+            background:#ffc75f;
+        }
+
+        .delete {
+            background:#ff6f91;
+            color:white;
+        }
+
+        table {
+            width:100%;
+            margin-top:15px;
+            border-collapse: collapse;
+        }
+
+        th {
+            background:#ffe0e9;
+            padding:12px;
+        }
+
+        td {
+            padding:10px;
+            border-bottom:1px solid #eee;
+            text-align:center;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+    <a th:href="@{/admin/product}">Sản phẩm</a>
+    <a th:href="@{/admin/invoice}">Hóa đơn</a>
+    <a th:href="@{/admin/staff}">Nhân viên</a>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+    <div class="card">
+        <h3>Quản lý nhân viên</h3>
+
+        <!-- FORM -->
+        <form th:action="@{/admin/staff/save}" method="post" th:object="${staff}">
+            <input type="hidden" th:field="*{id}">
+
+            <input type="text" th:field="*{name}" placeholder="Tên nhân viên">
+            <select th:field="*{role}">
+                <option  th:value="STAFF">STAFF</option>
+            </select>
+            <input type="text" th:field="*{phone}" placeholder="phone">
+
+            <input type="text" th:field="*{address}" placeholder="address">
+            <input type="text" th:field="*{age}" placeholder="age">
+
+            <label>
+                <input type="radio" th:field="*{gender}" value="true"> Nm
+            </label>
+
+            <label>
+                <input type="radio" th:field="*{gender}" value="false"> Nữ
+            </label>
+
+            <input type="text" th:field="*{password}" placeholder="password">
+
+            <button class="btn add">Lưu</button>
+        </form>
+
+        <!-- TABLE -->
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Tên</th>
+                <th>Role</th>
+                <th>SĐT</th>
+                <th>Địa chỉ</th>
+                <th>Tuổi</th>
+                <th>Giới tính</th>
+                <th>Password</th>
+                <th>Action</th>
+            </tr>
+
+            <tr th:each="s : ${listStaff}">
+                <td th:text="${s.id}"></td>
+                <td th:text="${s.name}"></td>
+                <td th:text="${s.role}"></td>
+                <td th:text="${s.phone}"></td>
+                <td th:text="${s.address}"></td>
+                <td th:text="${s.age}"></td>
+                <td th:text="${s.gender ? 'Nam':'Nữ'}"></td>
+                <td th:text="${s.password}"></td>
+
+                <td>
+                    <a th:href="@{/admin/staff/edit/{id}(id=${s.id})}" class="btn edit">Sửa</a>
+                    <a th:href="@{/admin/staff/delete/{id}(id=${s.id})}" class="btn delete">Xóa</a>
+                </td>
+            </tr>
+        </table>
+
+    </div>
+
+</div>
+
+</body>
+</html>

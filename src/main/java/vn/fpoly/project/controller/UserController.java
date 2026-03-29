@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import vn.fpoly.project.Service.UserService;
 
+
 @Controller
+@RequestMapping("/user/*")
 public class UserController {
     final private UserService userService;
 
@@ -23,10 +25,10 @@ public class UserController {
     @PostMapping("/login")
     public String handlelogin(@RequestParam("phone") String phone, @RequestParam("password") String password) {
         if (userService.validateLogin(phone, password)) {
-            if (userService.validateRole(phone).equals("ADMIN")) {
+            if (userService.validateRole(phone).equals("CUSTOMER")) {
                 return "redirect:/";
-            }else if (userService.validateRole(phone).equals("CUSTOMER")) {
-                return "redirect:/customer/page";
+            }else if (userService.validateRole(phone).equals("ADMIN")) {
+                return "redirect:/admin/page";
             }else if (userService.validateRole(phone).equals("STAFF")) {
                 return "redirect:/staff/page";
             }
