@@ -98,4 +98,12 @@ public class admincontroller {
         return "redirect:/admin/staff";
     }
 
+
+    @GetMapping("/account")
+    public String account(Model model) {
+        model.addAttribute("listAccount", urepo.findAll());
+        return "quanlytaikhoan";
+    }
+
+
 }
