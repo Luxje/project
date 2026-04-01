@@ -35,4 +35,11 @@ public class UserController {
         }
         return "login";
     }
+
+    @GetMapping("/passwordchange")
+    public String passwordchange() {
+        return "passwordchange";
+    }
+
+
 }
