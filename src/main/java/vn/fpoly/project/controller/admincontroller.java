@@ -7,12 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import vn.fpoly.project.model.invoice_item;
-import vn.fpoly.project.model.invoices;
-import vn.fpoly.project.model.products;
-import vn.fpoly.project.model.voucher;
+import vn.fpoly.project.model.*;
 import vn.fpoly.project.repo.*;
-import vn.fpoly.project.model.user;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,36 +57,47 @@ public class admincontroller {
     @Autowired
     voucherRepo vrepo;
 
+
+    @Autowired
+    staffRepo repostaff;
+
     @Autowired
     userRepo urepo;
     @GetMapping("/staff")
     public String staff(Model model){
-        List list = new ArrayList();
-        for (user u : urepo.findAll()){
-            if(u.role.equals("STAFF") || u.role.equals("staff")){
-                list.add(u);
-            }
-        }
-        model.addAttribute("listStaff",list);
-        model.addAttribute("staff",new user());
-        return "adminstaff";
+       model.addAttribute("listStaff",repostaff.findAll());
+       model.addAttribute("staff",new staff());
+       return "adminstaff";
+
     }
 
     @PostMapping("/staff/save")
-    public String savestaff(user u){
-        urepo.save(u);
+    public String savestaff(staff s,Model model){
+        for (user u : urepo.findAll()){
+            if(u.id == s.id && u.role.equals("STAFF")){
+                 if(!u.phone.equals(s.phone)  || !u.address.equals(s.address) || u.age != s.age || u.gender != s.gender){
+                     model.addAttribute("errorphone","thông tin khong hop le");
+                     model.addAttribute("listStaff",repostaff.findAll());
+                     model.addAttribute("staff",new staff());
+                     return "adminstaff";
+                 }else{
+                     repostaff.save(s);
+                 }
+            }
+        }
         return "redirect:/admin/staff";
-
     }
 
     @GetMapping("/staff/edit/{id}")
     public String editstaff(@PathVariable("id") int id,Model model){
-        model.addAttribute("staff", urepo.findById(id).orElse(null));
+        model.addAttribute("staff", repostaff.findById(id).orElse(null));
+        model.addAttribute("listStaff",repostaff.findAll());
         return "adminstaff";
     }
+
     @GetMapping("/staff/delete/{id}")
     public String deletestaff(@PathVariable("id") int id){
-        urepo.deleteById(id);
+        repostaff.deleteById(id);
         return "redirect:/admin/staff";
     }
 }

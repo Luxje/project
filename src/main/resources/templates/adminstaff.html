@@ -62,9 +62,12 @@
         }
 
         .btn {
-            padding:6px 12px;
+            padding:6px 6px;
+            margin-left: 480px;
             border-radius:10px;
             text-decoration:none;
+            height: 41px;
+            width: 100px;
         }
 
         .add {
@@ -74,10 +77,18 @@
         }
 
         .edit {
+            border-radius:10px;
+            text-decoration:none;
+            height: 50px;
+            width: 50px;
             background:#ffc75f;
         }
 
         .delete {
+            border-radius:10px;
+            text-decoration:none;
+            height: 50px;
+            width: 50px;
             background:#ff6f91;
             color:white;
         }
@@ -118,12 +129,9 @@
 
         <!-- FORM -->
         <form th:action="@{/admin/staff/save}" method="post" th:object="${staff}">
-            <input type="hidden" th:field="*{id}">
+            <input type="number" th:field="*{id}" placeholder="id">
 
             <input type="text" th:field="*{name}" placeholder="Tên nhân viên">
-            <select th:field="*{role}">
-                <option  th:value="STAFF">STAFF</option>
-            </select>
             <input type="text" th:field="*{phone}" placeholder="phone">
 
             <input type="text" th:field="*{address}" placeholder="address">
@@ -137,38 +145,35 @@
                 <input type="radio" th:field="*{gender}" value="false"> Nữ
             </label>
 
-            <input type="text" th:field="*{password}" placeholder="password">
-
             <button class="btn add">Lưu</button>
         </form>
-
+        <p th:if="${errorphone != null}"
+           th:text="${errorphone}"
+           style="color:red;">
+        </p>
         <!-- TABLE -->
         <table>
             <tr>
                 <th>ID</th>
                 <th>Tên</th>
-                <th>Role</th>
                 <th>SĐT</th>
                 <th>Địa chỉ</th>
                 <th>Tuổi</th>
                 <th>Giới tính</th>
-                <th>Password</th>
                 <th>Action</th>
             </tr>
 
             <tr th:each="s : ${listStaff}">
                 <td th:text="${s.id}"></td>
                 <td th:text="${s.name}"></td>
-                <td th:text="${s.role}"></td>
                 <td th:text="${s.phone}"></td>
                 <td th:text="${s.address}"></td>
                 <td th:text="${s.age}"></td>
                 <td th:text="${s.gender ? 'Nam':'Nữ'}"></td>
-                <td th:text="${s.password}"></td>
 
                 <td>
-                    <a th:href="@{/admin/staff/edit/{id}(id=${s.id})}" class="btn edit">Sửa</a>
-                    <a th:href="@{/admin/staff/delete/{id}(id=${s.id})}" class="btn delete">Xóa</a>
+                    <a th:href="@{/admin/staff/edit/{id}(id=${s.id})}" class="edit">Sửa</a>
+                    <a th:href="@{/admin/staff/delete/{id}(id=${s.id})}" class="delete">Xóa</a>
                 </td>
             </tr>
         </table>
