@@ -3,10 +3,7 @@ package vn.fpoly.project.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import vn.fpoly.project.model.*;
 import vn.fpoly.project.repo.*;
 
@@ -99,5 +96,12 @@ public class admincontroller {
     public String deletestaff(@PathVariable("id") int id){
         repostaff.deleteById(id);
         return "redirect:/admin/staff";
+    }
+
+    @GetMapping("/page/search")
+    public String search(Model model,@RequestParam("keyword") String name){
+        model.addAttribute("listProduct",repo.searchproduct(name));
+        model.addAttribute("product",new products());
+        return "adminpage";
     }
 }

@@ -4,6 +4,7 @@ import jakarta.servlet.ServletException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import vn.fpoly.project.model.invoice_item;
@@ -70,5 +71,12 @@ public class SanphamvahoadonController {
       repoitemsinvoice.save(iitems);
       model.addAttribute("invoice",invoicesrepo.findById(idinvoices).orElse(null));
       return "hoadon";
+  }
+
+  @GetMapping("/searchsanpham")
+    public String search(Model model,@RequestParam("name") String name){
+      model.addAttribute("object",repo.searchproduct(name));
+      return "index";
+
   }
 }
