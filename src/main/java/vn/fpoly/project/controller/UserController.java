@@ -1,6 +1,7 @@
 package vn.fpoly.project.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,4 +36,21 @@ public class UserController {
         }
         return "login";
     }
+
+    @GetMapping("/passwordchange")
+    public String passwordchange() {
+        return "passwordchange";
+    }
+
+    @PostMapping("/passwordchange")
+    public String handlepasswordchange(@RequestParam("phone") String phone, @RequestParam("password") String password, Model model) {
+        if (userService.passwordChange(phone, password)) {
+            model.addAttribute("message", "Đổi mật khẩu thành công");
+            return "redirect:/user/login";
+        }else {
+            model.addAttribute("message", "Đổi mật khẩu không thành công");
+            return "register";
+        }
+    }
+
 }
