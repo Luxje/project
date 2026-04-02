@@ -120,16 +120,14 @@
 
         <div class="form-group">
             <input type="text" name="username" placeholder="Họ và tên" required>
-            <span class="error-message" th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}"></span>
         </div>
 
         <div class="form-group">
-            <input type="text" th:field="*{phone}" placeholder="Số điện thoại" required>
-            <span class="error-message" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></span>
+            <input type="text" name="phone" placeholder="Số điện thoại" required>
         </div>
 
         <div class="form-group">
-            <input type="password" th:field="*{password}" placeholder="Mật khẩu" required>
+            <input type="password" name="password" placeholder="Mật khẩu" required>
         </div>
 
         <div class="form-group">
