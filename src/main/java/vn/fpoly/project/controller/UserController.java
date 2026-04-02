@@ -30,7 +30,7 @@ public class UserController {
             }else if (userService.validateRole(phone).equals("ADMIN")) {
                 return "redirect:/admin/page";
             }else if (userService.validateRole(phone).equals("STAFF")) {
-                return "redirect:/staff/page";
+                return "redirect:/admin/page";
             }
         }
         return "login";
