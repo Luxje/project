@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Sản phẩm</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/TrangChu.css}">
+    <link rel="stylesheet" th:href="@{/css/sanpham.css}">
+</head>
+
+<body>
+
+<!-- NAVBAR (GIỮ NGUYÊN) -->
+<nav class="navbar navbar-expand-lg custom-navbar">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="/">Group1</a>
+
+        <form class="mx-auto w-50 position-relative">
+            <input class="form-control rounded-pill ps-5 search-input"
+                   type="search" placeholder="Bạn muốn tìm gấu gì ...">
+            <span class="search-icon">🧸</span>
+        </form>
+
+        <div class="d-flex gap-4 align-items-center">
+            <a href="/login" class="nav-link-custom">Đăng nhập</a>
+            <a href="/cart" class="nav-link-custom">Giỏ hàng</a>
+        </div>
+    </div>
+</nav>
+
+<div class="menu-bar">
+    <div class="container d-flex justify-content-center gap-5">
+        <a href="#" class="menu-item">Thương hiệu</a>
+
+        <div class="menu-item dropdown">
+            <span>Sản phẩm</span>
+            <div class="dropdown-menu-custom">
+                <a href="#">Gấu bông teddy</a>
+                <a href="#">Gấu bông mini</a>
+                <a href="#">Gấu bông cao cấp</a>
+            </div>
+        </div>
+
+        <div class="menu-item dropdown">
+            <span>Khuyến mãi</span>
+            <div class="dropdown-menu-custom">
+                <a href="#">Sale 10%</a>
+                <a href="#">Mua 1 tặng 1</a>
+                <a href="#">Flash sale</a>
+            </div>
+        </div>
+
+        <a href="#" class="menu-item">Về chúng tôi</a>
+    </div>
+</div>
+
+<!-- PRODUCT LIST -->
+<div class="container mt-5">
+
+    <h3 class="text-center title-product mb-4">Danh sách gấu bông</h3>
+
+    <div class="row g-4">
+
+        <div class="col-md-3">
+            <div class="card product-card">
+                <img src="/images/sp1.jpg" class="card-img-top">
+                <div class="card-body text-center">
+                    <h6>Gấu Teddy Nâu</h6>
+                    <p class="price">250.000đ</p>
+                    <button class="btn btn-buy">Mua ngay</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card product-card">
+                <img src="/images/sp2.jpg" class="card-img-top">
+                <div class="card-body text-center">
+                    <h6>Gấu Panda</h6>
+                    <p class="price">320.000đ</p>
+                    <button class="btn btn-buy">Mua ngay</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card product-card">
+                <img src="/images/sp3.jpg" class="card-img-top">
+                <div class="card-body text-center">
+                    <h6>Gấu Mini Hồng</h6>
+                    <p class="price">150.000đ</p>
+                    <button class="btn btn-buy">Mua ngay</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card product-card">
+                <img src="/images/sp4.jpg" class="card-img-top">
+                <div class="card-body text-center">
+                    <h6>Gấu Trắng Snow</h6>
+                    <p class="price">280.000đ</p>
+                    <button class="btn btn-buy">Mua ngay</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card product-card">
+                <img src="/images/sp1.jpg" class="card-img-top">
+                <div class="card-body text-center">
+                    <h6>Gấu Brown</h6>
+                    <p class="price">300.000đ</p>
+                    <button class="btn btn-buy">Mua ngay</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card product-card">
+                <img src="/images/sp2.jpg" class="card-img-top">
+                <div class="card-body text-center">
+                    <h6>Gấu Baby Cute</h6>
+                    <p class="price">180.000đ</p>
+                    <button class="btn btn-buy">Mua ngay</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card product-card">
+                <img src="/images/sp1.jpg" class="card-img-top">
+                <div class="card-body text-center">
+                    <h6>Gấu Teddy Trắng</h6>
+                    <p class="price">450.000đ</p>
+                    <button class="btn btn-buy">Mua ngay</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card product-card">
+                <img src="/images/sp2.jpg" class="card-img-top">
+                <div class="card-body text-center">
+                    <h6>Gấu Panda Vàng</h6>
+                    <p class="price">620.000đ</p>
+                    <button class="btn btn-buy">Mua ngay</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card product-card">
+                <img src="/images/sp3.jpg" class="card-img-top">
+                <div class="card-body text-center">
+                    <h6>Gấu Mini Đen</h6>
+                    <p class="price">6200.000đ</p>
+                    <button class="btn btn-buy">Mua ngay</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card product-card">
+                <img src="/images/sp4.jpg" class="card-img-top">
+                <div class="card-body text-center">
+                    <h6>Gấu Vàng Snow</h6>
+                    <p class="price">880.000đ</p>
+                    <button class="btn btn-buy">Mua ngay</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card product-card">
+                <img src="/images/sp1.jpg" class="card-img-top">
+                <div class="card-body text-center">
+                    <h6>Gấu Browns</h6>
+                    <p class="price">900.000đ</p>
+                    <button class="btn btn-buy">Mua ngay</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card product-card">
+                <img src="/images/sp2.jpg" class="card-img-top">
+                <div class="card-body text-center">
+                    <h6>Gấu Baby Cute Nhạt</h6>
+                    <p class="price">560.000đ</p>
+                    <button class="btn btn-buy">Mua ngay</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card product-card">
+                <img src="/images/sp1.jpg" class="card-img-top">
+                <div class="card-body text-center">
+                    <h6>Gấu Teddy Nâu Hồng</h6>
+                    <p class="price">750.000đ</p>
+                    <button class="btn btn-buy">Mua ngay</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card product-card">
+                <img src="/images/sp2.jpg" class="card-img-top">
+                <div class="card-body text-center">
+                    <h6>Gấu Panda To</h6>
+                    <p class="price">1.320.000đ</p>
+                    <button class="btn btn-buy">Mua ngay</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card product-card">
+                <img src="/images/sp3.jpg" class="card-img-top">
+                <div class="card-body text-center">
+                    <h6>Gấu Mini Hồng Nhạt</h6>
+                    <p class="price">1.150.000đ</p>
+                    <button class="btn btn-buy">Mua ngay</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card product-card">
+                <img src="/images/sp4.jpg" class="card-img-top">
+                <div class="card-body text-center">
+                    <h6>Gấu Trắng Snow Đậm</h6>
+                    <p class="price">2.280.000đ</p>
+                    <button class="btn btn-buy">Mua ngay</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card product-card">
+                <img src="/images/sp1.jpg" class="card-img-top">
+                <div class="card-body text-center">
+                    <h6>Gấu Brown Tím</h6>
+                    <p class="price">3.300.000đ</p>
+                    <button class="btn btn-buy">Mua ngay</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card product-card">
+                <img src="/images/sp2.jpg" class="card-img-top">
+                <div class="card-body text-center">
+                    <h6>Gấu Baby Cute Vip</h6>
+                    <p class="price">1.180.000đ</p>
+                    <button class="btn btn-buy">Mua ngay</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card product-card">
+                <img src="/images/sp1.jpg" class="card-img-top">
+                <div class="card-body text-center">
+                    <h6>Gấu Teddy Nâu Ánh</h6>
+                    <p class="price">2.250.000đ</p>
+                    <button class="btn btn-buy">Mua ngay</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card product-card">
+                <img src="/images/sp2.jpg" class="card-img-top">
+                <div class="card-body text-center">
+                    <h6>Gấu Panda Dương</h6>
+                    <p class="price">1.120.000đ</p>
+                    <button class="btn btn-buy">Mua ngay</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card product-card">
+                <img src="/images/sp3.jpg" class="card-img-top">
+                <div class="card-body text-center">
+                    <h6>Gấu Mini Hồng Đỏ</h6>
+                    <p class="price">1.250.000đ</p>
+                    <button class="btn btn-buy">Mua ngay</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card product-card">
+                <img src="/images/sp4.jpg" class="card-img-top">
+                <div class="card-body text-center">
+                    <h6>Gấu Trắng Snow Hoàng</h6>
+                    <p class="price">1.080.000đ</p>
+                    <button class="btn btn-buy">Mua ngay</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card product-card">
+                <img src="/images/sp1.jpg" class="card-img-top">
+                <div class="card-body text-center">
+                    <h6>Gấu Brown Mới</h6>
+                    <p class="price">2.500.000đ</p>
+                    <button class="btn btn-buy">Mua ngay</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card product-card">
+                <img src="/images/sp2.jpg" class="card-img-top">
+                <div class="card-body text-center">
+                    <h6>Gấu Baby Cute Ná</h6>
+                    <p class="price">2.870.000đ</p>
+                    <button class="btn btn-buy">Mua ngay</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card product-card">
+                <img src="/images/sp1.jpg" class="card-img-top">
+                <div class="card-body text-center">
+                    <h6>Gấu Teddy Ánh Kim</h6>
+                    <p class="price">2.650.000đ</p>
+                    <button class="btn btn-buy">Mua ngay</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card product-card">
+                <img src="/images/sp2.jpg" class="card-img-top">
+                <div class="card-body text-center">
+                    <h6>Gấu Panda Trắng Đen</h6>
+                    <p class="price">1.380.000đ</p>
+                    <button class="btn btn-buy">Mua ngay</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card product-card">
+                <img src="/images/sp3.jpg" class="card-img-top">
+                <div class="card-body text-center">
+                    <h6>Gấu Mini Hồng Tím</h6>
+                    <p class="price">1.550.000đ</p>
+                    <button class="btn btn-buy">Mua ngay</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card product-card">
+                <img src="/images/sp4.jpg" class="card-img-top">
+                <div class="card-body text-center">
+                    <h6>Gấu Trắng Snow Bạch</h6>
+                    <p class="price">2.990.000đ</p>
+                    <button class="btn btn-buy">Mua ngay</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card product-card">
+                <img src="/images/sp1.jpg" class="card-img-top">
+                <div class="card-body text-center">
+                    <h6>Gấu Brown Đá</h6>
+                    <p class="price">1.980.000đ</p>
+                    <button class="btn btn-buy">Mua ngay</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card product-card">
+                <img src="/images/sp2.jpg" class="card-img-top">
+                <div class="card-body text-center">
+                    <h6>Gấu Baby Cute Kim</h6>
+                    <p class="price">1.990.000đ</p>
+                    <button class="btn btn-buy">Mua ngay</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card product-card">
+                <img src="/images/sp1.jpg" class="card-img-top">
+                <div class="card-body text-center">
+                    <h6>Gấu Teddy Nâu Đạo</h6>
+                    <p class="price">2.120.000đ</p>
+                    <button class="btn btn-buy">Mua ngay</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card product-card">
+                <img src="/images/sp2.jpg" class="card-img-top">
+                <div class="card-body text-center">
+                    <h6>Gấu Panda Trắng Nhạt</h6>
+                    <p class="price">2.100.000đ</p>
+                    <button class="btn btn-buy">Mua ngay</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card product-card">
+                <img src="/images/sp3.jpg" class="card-img-top">
+                <div class="card-body text-center">
+                    <h6>Gấu Mini Ánh Xạ</h6>
+                    <p class="price">1.560.000đ</p>
+                    <button class="btn btn-buy">Mua ngay</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card product-card">
+                <img src="/images/sp4.jpg" class="card-img-top">
+                <div class="card-body text-center">
+                    <h6>Gấu Trắng Snow Xạ</h6>
+                    <p class="price">2.280.000đ</p>
+                    <button class="btn btn-buy">Mua ngay</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card product-card">
+                <img src="/images/sp1.jpg" class="card-img-top">
+                <div class="card-body text-center">
+                    <h6>Gấu Brown Kim Đá</h6>
+                    <p class="price">3.300.000đ</p>
+                    <button class="btn btn-buy">Mua ngay</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card product-card">
+                <img src="/images/sp2.jpg" class="card-img-top">
+                <div class="card-body text-center">
+                    <h6>Gấu Baby Cute Nhỏ</h6>
+                    <p class="price">1.390.000đ</p>
+                    <button class="btn btn-buy">Mua ngay</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="footer mt-5">
+    <div class="container">
+        <div class="row">
+
+            <!-- Cột 1 -->
+            <div class="col-md-3">
+                <h5>Group1</h5>
+                <p>Shop gấu bông dễ thương, chất lượng cao, giá tốt.</p>
+            </div>
+
+            <!-- Cột 2 -->
+            <div class="col-md-3">
+                <h5>Danh mục</h5>
+                <ul>
+                    <li><a href="#">Gấu Teddy</a></li>
+                    <li><a href="#">Gấu Mini</a></li>
+                    <li><a href="#">Gấu Cao Cấp</a></li>
+                </ul>
+            </div>
+
+            <!-- Cột 3 -->
+            <div class="col-md-3">
+                <h5>Hỗ trợ</h5>
+                <ul>
+                    <li><a href="#">Liên hệ</a></li>
+                    <li><a href="#">Chính sách</a></li>
+                    <li><a href="#">Hướng dẫn mua</a></li>
+                </ul>
+            </div>
+
+            <!-- Cột 4 -->
+            <div class="col-md-3">
+                <h5>Kết nối</h5>
+                <p>📞 0123 456 789</p>
+                <p>📧 group1@gmail.com</p>
+            </div>
+
+        </div>
+
+        <!-- Dòng dưới -->
+        <div class="footer-bottom text-center mt-4">
+            Thank you very much.
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>
