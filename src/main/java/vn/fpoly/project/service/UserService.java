@@ -45,13 +45,11 @@ public class UserService {
         if (newPassword.equals(confirmPassword)) {
         user us = repo.findByPhone(phone);
         if (us == null) {
-            System.out.println("doi mat khau that bai");
             return false;
         }
         else {
             us.setPassword(newPassword);
             repo.save(us);
-            System.out.println("doi mat khau thanhc ong");
             return true;
         }
         }
