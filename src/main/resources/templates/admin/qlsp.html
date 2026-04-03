@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+</head>
+
+<body>
+
+<div class="container-fluid">
+    <div class="row">
+
+        <!-- SIDEBAR -->
+        <div class="col-md-2 sidebar">
+            <h4>ADMIN</h4>
+
+            <a th:href="@{/admin/qlsp}" class="active">Quản lý sản phẩm</a>
+            <a th:href="@{/admin/qlkm}">Quản lý khuyến mãi</a>
+            <a th:href="@{/admin/qlkh}">Quản lý khách hàng</a>
+            <a th:href="@{/admin/qlnv}">Quản lý nhân viên</a>
+            <a th:href="@{/admin/qlhd}">Quản lý hóa đơn</a>
+        </div>
+
+        <!-- CONTENT -->
+        <div class="col-md-10 content">
+
+            <h3 class="title">Quản lý sản phẩm</h3>
+
+            <!-- FORM -->
+            <div class="card card-custom mb-4">
+                <div class="card-body">
+
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <input type="text" id="name" class="form-control" placeholder="Tên sản phẩm">
+                        </div>
+
+                        <div class="col-md-4">
+                            <input type="number" id="price" class="form-control" placeholder="Giá">
+                        </div>
+
+                        <div class="col-md-4">
+                            <input type="text" id="image" class="form-control" placeholder="Tên ảnh">
+                        </div>
+                    </div>
+
+                    <p id="error" class="text-danger mt-2"></p>
+
+                    <!-- BUTTON -->
+                    <div class="mt-3">
+                        <button class="btn btn-add" onclick="addProduct()">Thêm</button>
+                        <button class="btn btn-edit" onclick="editProduct()">Sửa</button>
+                        <button class="btn btn-delete" onclick="deleteProduct()">Xóa</button>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- TABLE -->
+            <div class="card card-custom">
+                <div class="card-body">
+
+                    <table class="table table-hover text-center">
+                        <thead>
+                        <tr>
+                            <th>Tên</th>
+                            <th>Giá</th>
+                            <th>Ảnh</th>
+                        </tr>
+                        </thead>
+                        <tbody id="productTable"></tbody>
+                    </table>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<script>
+    let products = [];
+
+    function validate(name, price) {
+        if (name === "") return "Không được để trống tên!";
+        if (price <= 0) return "Giá phải > 0!";
+        return "";
+    }
+
+    function addProduct() {
+        let name = document.getElementById("name").value;
+        let price = document.getElementById("price").value;
+        let image = document.getElementById("image").value;
+        let error = document.getElementById("error");
+
+        let check = validate(name, price);
+
+        if (check !== "") {
+            error.innerText = check;
+            return;
+        }
+
+        error.innerText = "";
+
+        products.push({ name, price, image });
+        render();
+    }
+
+    function deleteProduct() {
+        products.pop();
+        render();
+    }
+
+    function editProduct() {
+        if (products.length === 0) return;
+
+        let name = document.getElementById("name").value;
+        let price = document.getElementById("price").value;
+
+        let check = validate(name, price);
+
+        if (check !== "") {
+            document.getElementById("error").innerText = check;
+            return;
+        }
+
+        products[products.length - 1].name = name;
+        products[products.length - 1].price = price;
+
+        render();
+    }
+
+    function render() {
+        let table = document.getElementById("productTable");
+        table.innerHTML = "";
+
+        products.forEach(p => {
+            table.innerHTML += `
+            <tr>
+                <td>${p.name}</td>
+                <td>${p.price}</td>
+                <td>${p.image}</td>
+            </tr>
+        `;
+        });
+    }
+</script>
+
+</body>
+</html>

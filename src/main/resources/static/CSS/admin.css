@@ -1,0 +1,84 @@
+body {
+    background-color: #f5f5f5;
+}
+
+/* ===== SIDEBAR ===== */
+.sidebar {
+    height: 100vh;
+    background: #5a3e2b;
+    color: #fff;
+    padding: 20px;
+}
+
+.sidebar h4 {
+    margin-bottom: 30px;
+    font-weight: bold;
+}
+
+.sidebar a {
+    display: block;
+    color: #fff;
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    transition: 0.3s;
+}
+
+.sidebar a:hover {
+    background: #8b5e3c;
+}
+
+/* ===== CONTENT ===== */
+.content {
+    padding: 30px;
+}
+
+/* TITLE */
+.title {
+    color: #5a3e2b;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* CARD */
+.card-custom {
+    border-radius: 15px;
+    border: none;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* BUTTON */
+.btn-add {
+    background: #d8c3a5;
+    color: #5a3e2b;
+    border-radius: 10px;
+}
+
+.btn-edit {
+    background: #8b5e3c;
+    color: #fff;
+    border-radius: 10px;
+}
+
+.btn-delete {
+    background: #3e2a1d;
+    color: #fff;
+    border-radius: 10px;
+}
+
+.btn:hover {
+    opacity: 0.9;
+}
+
+/* TABLE */
+.table th {
+    background: #f5e6d3;
+}
+
+.sidebar a.active {
+    background: #d8c3a5;
+    color: #5a3e2b;
+    font-weight: bold;
+}

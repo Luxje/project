@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản lý hóa đơn</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+</head>
+
+<body>
+
+<div class="container-fluid">
+    <div class="row">
+
+        <!-- SIDEBAR -->
+        <div class="col-md-2 sidebar">
+            <h4>ADMIN</h4>
+
+            <a th:href="@{/admin/qlsp}">Quản lý sản phẩm</a>
+            <a th:href="@{/admin/qlkm}">Quản lý khuyến mãi</a>
+            <a th:href="@{/admin/qlkh}">Quản lý khách hàng</a>
+            <a th:href="@{/admin/qlnv}">Quản lý nhân viên</a>
+            <a th:href="@{/admin/qlhd}" class="active">Quản lý hóa đơn</a>
+        </div>
+
+        <!-- CONTENT -->
+        <div class="col-md-10 content">
+
+            <h3 class="title">Quản lý hóa đơn</h3>
+
+            <!-- FORM -->
+            <div class="card card-custom mb-4">
+                <div class="card-body">
+
+                    <div class="row g-3">
+                        <div class="col-md-3">
+                            <input type="text" id="customer" class="form-control" placeholder="Tên khách">
+                        </div>
+
+                        <div class="col-md-3">
+                            <input type="number" id="quantity" class="form-control" placeholder="Số lượng">
+                        </div>
+
+                        <div class="col-md-3">
+                            <input type="number" id="price" class="form-control" placeholder="Đơn giá">
+                        </div>
+
+                        <div class="col-md-3">
+                            <select id="status" class="form-control">
+                                <option value="">-- Trạng thái --</option>
+                                <option>Chưa thanh toán</option>
+                                <option>Đã thanh toán</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <p id="error" class="text-danger mt-2"></p>
+
+                    <!-- BUTTON -->
+                    <div class="mt-3">
+                        <button class="btn btn-add" onclick="addOrder()">Thêm</button>
+                        <button class="btn btn-edit" onclick="editOrder()">Sửa</button>
+                        <button class="btn btn-delete" onclick="deleteOrder()">Xóa</button>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- TABLE -->
+            <div class="card card-custom">
+                <div class="card-body">
+
+                    <table class="table table-hover text-center">
+                        <thead>
+                        <tr>
+                            <th>Khách</th>
+                            <th>Số lượng</th>
+                            <th>Đơn giá</th>
+                            <th>Tổng tiền</th>
+                            <th>Trạng thái</th>
+                        </tr>
+                        </thead>
+                        <tbody id="orderTable"></tbody>
+                    </table>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<script>
+    let orders = [];
+
+    function validateOrder(customer, quantity, price, status) {
+        if (customer === "") return "Nhập tên khách!";
+        if (quantity <= 0) return "Số lượng phải > 0!";
+        if (price <= 0) return "Giá phải > 0!";
+        if (status === "") return "Chọn trạng thái!";
+        return "";
+    }
+
+    function addOrder() {
+        let customer = document.getElementById("customer").value;
+        let quantity = Number(document.getElementById("quantity").value);
+        let price = Number(document.getElementById("price").value);
+        let status = document.getElementById("status").value;
+
+        let error = document.getElementById("error");
+        let check = validateOrder(customer, quantity, price, status);
+
+        if (check !== "") {
+            error.innerText = check;
+            return;
+        }
+
+        error.innerText = "";
+
+        let total = quantity * price;
+
+        orders.push({ customer, quantity, price, total, status });
+        render();
+    }
+
+    function deleteOrder() {
+        orders.pop();
+        render();
+    }
+
+    function editOrder() {
+        if (orders.length === 0) return;
+
+        let customer = document.getElementById("customer").value;
+        let quantity = Number(document.getElementById("quantity").value);
+        let price = Number(document.getElementById("price").value);
+        let status = document.getElementById("status").value;
+
+        let check = validateOrder(customer, quantity, price, status);
+
+        if (check !== "") {
+            document.getElementById("error").innerText = check;
+            return;
+        }
+
+        let total = quantity * price;
+
+        orders[orders.length - 1] = { customer, quantity, price, total, status };
+        render();
+    }
+
+    function render() {
+        let table = document.getElementById("orderTable");
+        table.innerHTML = "";
+
+        orders.forEach(o => {
+            table.innerHTML += `
+            <tr>
+                <td>${o.customer}</td>
+                <td>${o.quantity}</td>
+                <td>${o.price}</td>
+                <td>${o.total}</td>
+                <td>${o.status}</td>
+            </tr>
+        `;
+        });
+    }
+</script>
+
+</body>
+</html>
