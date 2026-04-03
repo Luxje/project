@@ -82,3 +82,15 @@ body {
     color: #5a3e2b;
     font-weight: bold;
 }
+
+/* SEARCH */
+#searchInput {
+    border-radius: 20px;
+    border: 1px solid #d8c3a5;
+    padding: 8px 15px;
+}
+
+#searchInput:focus {
+    border-color: #5a3e2b;
+    box-shadow: 0 0 5px rgba(90, 62, 43, 0.3);
+}
