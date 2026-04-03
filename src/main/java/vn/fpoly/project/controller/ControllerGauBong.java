@@ -35,4 +35,9 @@ public class ControllerGauBong {
     public String changepass() {
         return "changepass"; // tên file doimatkhau.html
     }
+
+    @GetMapping("/login")
+    public String loginPage() {
+        return "login";
+    }
 }
