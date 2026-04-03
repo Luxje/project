@@ -1,0 +1,75 @@
+/* RESET */
+body {
+    margin: 0;
+    height: 100vh;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+}
+
+/* BACKGROUND */
+.bg-blur {
+    position: fixed;
+    inset: 0;
+    background: url('/images/banner1.jpg') center/cover no-repeat;
+    filter: blur(6px);
+    z-index: -2;
+}
+
+/* OVERLAY */
+.bg-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(245, 230, 211, 0.6);
+    z-index: -1;
+}
+
+/* CARD */
+.login-card {
+    width: 400px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    backdrop-filter: blur(5px);
+}
+
+/* TITLE */
+.title-login {
+    color: #5a3e2b;
+    font-weight: bold;
+}
+
+/* BUTTON */
+.btn-login {
+    background-color: #d8c3a5;
+    border: none;
+    border-radius: 20px;
+    color: #5a3e2b;
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+.btn-login:hover {
+    background-color: #cbb08d;
+    color: #000;
+}
+
+/* LINK */
+.link-auth {
+    text-decoration: none;
+    color: #5a3e2b;
+    transition: 0.3s;
+}
+
+.link-auth:hover {
+    color: #000;
+}
+
+.bg-slide {
+    position: fixed;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    filter: blur(6px);
+    z-index: -2;
+    opacity: 0;
+    transition: opacity 1s ease;
+}
