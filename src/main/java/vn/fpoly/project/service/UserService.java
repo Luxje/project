@@ -40,4 +40,17 @@ public class UserService {
         }
         return false;
     }
+
+    public boolean passwordChange(String phone, String newPassword) {
+        user us = repo.findByPhone(phone);
+        if (us == null) {
+            return false;
+        }
+        else {
+            us.setPassword(newPassword);
+            return true;
+        }
+    }
+
+
 }
