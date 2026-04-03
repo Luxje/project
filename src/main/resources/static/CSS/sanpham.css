@@ -1,4 +1,4 @@
-/* TITLE */
+/* ===== TITLE ===== */
 .title-product {
     color: #5a3e2b;
     font-weight: bold;
@@ -14,7 +14,7 @@
     margin: 10px auto;
 }
 
-/* CARD */
+/* ===== PRODUCT CARD ===== */
 .product-card {
     border-radius: 15px;
     overflow: hidden;
@@ -26,19 +26,19 @@
     box-shadow: 0 10px 25px rgba(0,0,0,0.2);
 }
 
-/* IMAGE */
+/* ===== IMAGE ===== */
 .card-img-top {
     height: 220px;
     object-fit: cover;
 }
 
-/* PRICE */
+/* ===== PRICE ===== */
 .price {
     color: #e67e22;
     font-weight: bold;
 }
 
-/* BUTTON */
+/* ===== BUTTON ===== */
 .btn-buy {
     background-color: #d8c3a5;
     border: none;
@@ -53,20 +53,18 @@
     color: #000;
 }
 
-/* Footer */
+/* ===== FOOTER ===== */
 .footer {
     background-color: #f5e6d3;
     padding: 40px 0 20px;
     color: #5a3e2b;
 }
 
-/* Tiêu đề */
 .footer h5 {
     font-weight: bold;
     margin-bottom: 15px;
 }
 
-/* List */
 .footer ul {
     list-style: none;
     padding: 0;
@@ -76,7 +74,6 @@
     margin-bottom: 8px;
 }
 
-/* Link */
 .footer ul li a {
     text-decoration: none;
     color: #5a3e2b;
@@ -87,38 +84,56 @@
     color: #000;
 }
 
-/* Bottom */
 .footer-bottom {
     border-top: 1px solid #e0d0b8;
     padding-top: 10px;
     font-size: 14px;
 }
 
-/*images*/
-.banner-img {
-    height: 400px;
-    object-fit: cover;
-}
-
+/* ===== FILTER BOX STYLE XỊN ===== */
 .filter-box {
-    position: sticky;
-    top: 20px;
-    background: #fff;
+    background: #f5e6d3;
     padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    border-radius: 20px;
+    border: 1px solid #e0d0b8;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
 }
 
+/* Tiêu đề */
 .filter-box h5 {
+    color: #5a3e2b;
     font-weight: bold;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 }
 
-.filter-box div {
-    margin-bottom: 8px;
-    cursor: pointer;
+/* Input */
+.filter-box input {
+    border-radius: 10px;
+    border: 1px solid #d8c3a5;
+    padding: 10px;
 }
 
-.filter-box input[type="checkbox"] {
-    margin-right: 8px;
+.filter-box input:focus {
+    border-color: #5a3e2b;
+    box-shadow: 0 0 5px rgba(90, 62, 43, 0.3);
+}
+
+/* Button */
+.btn-filter {
+    background: linear-gradient(45deg, #5a3e2b, #8b5e3c);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    padding: 10px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-filter:hover {
+    transform: scale(1.03);
+    background: linear-gradient(45deg, #3e2a1d, #6b4423);
+}
+
+.filter-wrapper {
+    margin-top: 40px;
 }
