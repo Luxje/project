@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Tài khoản của tôi</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/taikhoan.css}">
+
+    <style>
+        body {
+            background-color: #f5f5f5;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* ===== SIDEBAR ===== */
+        .account-sidebar {
+            background: #fff;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .account-sidebar h5 {
+            color: #5a3e2b;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .account-sidebar a {
+            display: block;
+            padding: 10px;
+            text-decoration: none;
+            color: #5a3e2b;
+            border-radius: 10px;
+            margin-bottom: 8px;
+            transition: 0.3s;
+        }
+
+        .account-sidebar a:hover {
+            background: #f5e6d3;
+        }
+
+        .account-sidebar a.active {
+            background: #d8c3a5;
+            font-weight: bold;
+        }
+
+        /* ===== CONTENT ===== */
+        .account-content {
+            background: #fff;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .title {
+            color: #5a3e2b;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        /* AVATAR */
+        .avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #d8c3a5;
+        }
+
+        /* BUTTONS */
+        .btn-upload {
+            background: #d8c3a5;
+            color: #5a3e2b;
+            border: none;
+            border-radius: 20px;
+            padding: 6px 15px;
+            cursor: pointer;
+        }
+
+        .btn-upload:hover {
+            background: #cbb08d;
+        }
+
+        .btn-save {
+            background: #5a3e2b;
+            color: #fff;
+            border: none;
+            border-radius: 20px;
+            padding: 8px 20px;
+            cursor: pointer;
+        }
+
+        .btn-save:hover {
+            background: #3e2a1d;
+        }
+
+        /* INPUT */
+        .form-control {
+            border-radius: 10px;
+            border: 1px solid #d8c3a5;
+            padding: 6px 12px;
+            font-size: 16px;
+        }
+
+        .form-control:focus {
+            border-color: #5a3e2b;
+            box-shadow: 0 0 5px rgba(90, 62, 43, 0.3);
+        }
+
+        /* TAB BUTTONS */
+        .tab-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .tab-btn {
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            background: #f5e6d3;
+            color: #5a3e2b;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .tab-btn.active {
+            background: #5a3e2b;
+            color: #fff;
+        }
+
+        .tab-btn:hover {
+            background: #d8c3a5;
+        }
+
+        /* ===== CARD CONTENT ===== */
+        .card-info {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            padding: 20px;
+            margin-bottom: 20px; /* Khoảng cách giữa các card */
+            display: flex;
+            align-items: center;
+            gap: 30px; /* Khoảng cách avatar và info */
+        }
+
+        .info-section p {
+            margin-bottom: 8px;
+            font-size: 16px;
+            line-height: 1.4;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container mt-5">
+    <div class="row">
+
+        <!-- SIDEBAR -->
+        <div class="col-md-3">
+            <div class="account-sidebar">
+                <h5>Tài khoản</h5>
+                <a href="#" class="active">Thông tin cá nhân</a>
+                <a href="#">Đơn hàng</a>
+                <a href="#">Đổi mật khẩu</a>
+            </div>
+        </div>
+
+        <!-- CONTENT -->
+        <div class="col-md-9">
+            <div class="account-content">
+
+                <!-- TAB BUTTON -->
+                <div class="tab-buttons mb-3">
+                    <button class="tab-btn active" onclick="showTab('view')">Thông tin</button>
+                    <button class="tab-btn" onclick="showTab('edit')">Cập nhật</button>
+                </div>
+
+                <!-- ===== VIEW MODE ===== -->
+                <div id="viewTab" class="card-info">
+                    <div class="avatar-section">
+                        <img src="https://via.placeholder.com/120" class="avatar">
+                    </div>
+                    <div class="info-section">
+                        <p><b>Họ tên:</b> Nguyễn Văn A</p>
+                        <p><b>Email:</b> example@gmail.com</p>
+                        <p><b>SĐT:</b> 0123456789</p>
+                        <p><b>Địa chỉ:</b> Hà Nội</p>
+                    </div>
+                </div>
+
+                <!-- ===== EDIT MODE ===== -->
+                <div id="editTab" class="card-info" style="display:none; flex-direction: column;">
+                    <div class="mb-3">
+                        <label>Họ và tên</label>
+                        <input type="text" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label>Email</label>
+                        <input type="email" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label>SĐT</label>
+                        <input type="text" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label>Địa chỉ</label>
+                        <input type="text" class="form-control">
+                    </div>
+                    <button class="btn btn-save">Lưu thay đổi</button>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    function showTab(tab) {
+        let view = document.getElementById("viewTab");
+        let edit = document.getElementById("editTab");
+        let buttons = document.querySelectorAll(".tab-btn");
+
+        buttons.forEach(btn => btn.classList.remove("active"));
+
+        if (tab === "view") {
+            view.style.display = "flex";
+            edit.style.display = "none";
+            buttons[0].classList.add("active");
+        } else {
+            view.style.display = "none";
+            edit.style.display = "flex";
+            buttons[1].classList.add("active");
+        }
+    }
+</script>
+
+</body>
+</html>

@@ -30,8 +30,11 @@
 
         <!-- Right menu -->
         <div class="d-flex gap-4 align-items-center">
-            <a href="#" class="nav-link-custom">Đăng nhập</a>
-            <a href="/cart" class="nav-link-custom">Giỏ hàng</a>
+            <a th:href="@{/#}" class="nav-link-custom">Đăng nhập</a>
+
+            <a th:href="@{/#}" class="nav-link-custom">Giỏ hàng</a>
+
+            <a th:href="@{/taikhoan}" class="nav-link-custom">Tài khoản</a>
         </div>
 
     </div>
@@ -42,13 +45,13 @@
 <div class="menu-bar">
     <div class="container d-flex justify-content-center gap-5">
 
-        <a href="#" class="menu-item">Thương hiệu</a>
+        <a th:href="@{/brand}" class="menu-item">Thương hiệu</a>
 
-        <a href="#" class="menu-item">Sản Phẩm</a>
+        <a th:href="@{/products}" class="menu-item">Sản Phẩm</a>
 
-        <a href="#" class="menu-item">Khuyến Mãi</a>
+        <a th:href="@{/promotions}" class="menu-item">Khuyến Mãi</a>
 
-        <a href="#" class="menu-item">Về chúng tôi</a>
+        <a th:href="@{/about}" class="menu-item">Về chúng tôi</a>
 
     </div>
 </div>

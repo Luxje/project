@@ -69,4 +69,9 @@ public class ControllerGauBong {
     public String orders() {
         return "admin/qlhd";
     }
+
+    @GetMapping("/taikhoan")
+    public String taikhoan() {
+        return "taikhoan";
+    }
 }
