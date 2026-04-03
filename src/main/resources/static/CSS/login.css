@@ -6,14 +6,14 @@ body {
     font-family: Arial, sans-serif;
 }
 
-/* BACKGROUND */
-.bg-blur {
-    position: fixed;
-    inset: 0;
-    background: url('/images/banner1.jpg') center/cover no-repeat;
-    filter: blur(6px);
-    z-index: -2;
-}
+/*!* BACKGROUND *!*/
+/*.bg-blur {*/
+/*    position: fixed;*/
+/*    inset: 0;*/
+/*    background: url('/images/banner1.jpg') center/cover no-repeat;*/
+/*    filter: blur(6px);*/
+/*    z-index: -2;*/
+/*}*/
 
 /* OVERLAY */
 .bg-overlay {

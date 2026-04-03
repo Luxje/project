@@ -40,4 +40,33 @@ public class ControllerGauBong {
     public String loginPage() {
         return "login";
     }
+
+    @GetMapping("/admin/qlsp")
+    public String qlsp(Model model) {
+
+        // Nếu sau này có dữ liệu thì truyền vào đây
+        // model.addAttribute("products", list);
+
+        return "admin/qlsp"; // admin.html
+    }
+
+    @GetMapping("/admin/qlkm")
+    public String qlkm() {
+        return "admin/qlkm";
+    }
+
+    @GetMapping("/admin/qlkh")
+    public String customers() {
+        return "admin/qlkh";
+    }
+
+    @GetMapping("/admin/qlnv")
+    public String employees() {
+        return "admin/qlnv";
+    }
+
+    @GetMapping("/admin/qlhd")
+    public String orders() {
+        return "admin/qlhd";
+    }
 }
