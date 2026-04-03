@@ -10,7 +10,7 @@ import vn.fpoly.project.service.UserService;
 
 
 @Controller
-@RequestMapping("/user/*")
+@RequestMapping("/user")
 public class UserController {
     final private UserService userService;
 
@@ -50,22 +50,23 @@ public class UserController {
 
 
 
-//    @GetMapping("/passwordchange")
-//    public String passwordchange() {
-//        return "passwordchange";
-//    }
-//
-//    @PostMapping("/passwordchange")
-//    public String handlepasswordchange(@RequestParam("phone") String phone, @RequestParam("password") String password, Model model) {
-//        if (userService.passwordChange(phone, password)) {
-//            model.addAttribute("message", "Đổi mật khẩu thành công");
-//            return "redirect:/user/login";
-//        }else {
-//            model.addAttribute("message", "Đổi mật khẩu không thành công");
-//            return "";
-//        }
-//    }
+    @GetMapping("/passwordchange")
+    public String passwordchange() {
+        return "changepass";
+    }
 
-
+    @PostMapping("/passwordchange")
+    public String handlepasswordchange(@RequestParam("phone") String phone,
+                                       @RequestParam("password") String password,
+                                       @RequestParam("confirmPassword") String confirmPassword,
+                                       Model model) {
+            if (userService.passwordChange(phone, password, confirmPassword)) {
+                model.addAttribute("message", "Đổi mật khẩu thành công");
+                return "changepass";
+            } else {
+                model.addAttribute("message", "Đổi mật khẩu thất bại");
+                return "changepass";
+            }
+    }
 
 }
