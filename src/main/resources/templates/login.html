@@ -1,133 +1,91 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Đăng nhập</title>
+  <title>Login - Teddy Shop</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #ffd6e0, #ffe9c7);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    .login-container {
+      background: white;
+      padding: 40px;
+      border-radius: 20px;
+      width: 320px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      text-align: center;
+    }
 
-  <!-- CHỈ GIỮ 1 LINK CSS -->
-  <link rel="stylesheet" th:href="@{/css/login.css}">
+    .login-container h2 {
+      margin-bottom: 10px;
+      color: #ff7b9c;
+    }
+
+    .login-container p {
+      font-size: 14px;
+      color: #888;
+      margin-bottom: 25px;
+    }
+
+    .login-container input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+      outline: none;
+      transition: 0.3s;
+    }
+
+    .login-container input:focus {
+      border-color: #ff7b9c;
+    }
+
+    .login-container button {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 10px;
+      background: #ff7b9c;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .login-container button:hover {
+      background: #ff5f87;
+    }
+
+    .bear {
+      font-size: 40px;
+      margin-bottom: 10px;
+    }
+
+  </style>
 </head>
-
 <body>
 
-<!-- BACKGROUND SLIDESHOW -->
-<div id="bg1" class="bg-slide"></div>
-<div id="bg2" class="bg-slide"></div>
+<div class="login-container">
+  <div class="bear">🧸</div>
+  <h2>Teddy Shop</h2>
+  <p>Đăng nhập để mua gấu bông siêu cute</p>
 
-<!-- OVERLAY -->
-<div class="bg-overlay"></div>
-
-<!-- FORM -->
-<div class="container d-flex justify-content-center align-items-center vh-100 position-relative">
-
-  <div class="card login-card p-4">
-
-    <h3 class="text-center mb-4 title-login">
-      Đăng nhập
-    </h3>
-
-    <div id="alertBox" class="alert d-none"></div>
-
-    <form id="formLogin">
-
-      <div class="mb-3">
-        <label>Email</label>
-        <input type="email" id="email" class="form-control"
-               placeholder="Nhập email..." required>
-      </div>
-
-      <div class="mb-3">
-        <label>Mật khẩu</label>
-        <input type="password" id="password" class="form-control"
-               placeholder="Nhập mật khẩu..." required>
-      </div>
-
-      <button class="btn btn-login w-100">
-        Đăng nhập
-      </button>
-
-      <div class="text-center mt-3">
-        <a href="/changepass" class="link-auth">
-          Quên mật khẩu?
-        </a>
-      </div>
-
-    </form>
-  </div>
+  <form action="/user/login" method="post">
+    <input type="text" name="phone" placeholder="Số điện thoại">
+    <input type="password" name="password" placeholder="Mật khẩu">
+    <button type="submit">Đăng nhập</button>
+  </form>
+  <a th:href="@{/register.html}"><button type="button">Đăng ký</button></a>
 </div>
-
-<script>
-  const alertBox = document.getElementById("alertBox");
-
-  document.getElementById("formLogin").addEventListener("submit", function(e){
-    e.preventDefault();
-
-    let email = document.getElementById("email").value;
-    let password = document.getElementById("password").value;
-
-    alertBox.className = "alert";
-
-    if (!email || !password) {
-      alertBox.classList.add("alert-danger");
-      alertBox.innerText = "Vui lòng nhập đầy đủ thông tin!";
-    } else {
-      fetch("/login", {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({ email, password })
-      })
-              .then(res => res.json())
-              .then(data => {
-                alertBox.classList.add("alert-success");
-                alertBox.innerText = data.message || "Đăng nhập thành công!";
-              })
-              .catch(() => {
-                alertBox.classList.add("alert-danger");
-                alertBox.innerText = "Sai tài khoản hoặc lỗi server!";
-              });
-    }
-
-    alertBox.classList.remove("d-none");
-  });
-
-
-  // 🔥 SLIDESHOW BACKGROUND
-  const images = [
-    "/images/banner1.jpg",
-    "/images/banner2.jpg",
-    "/images/banner3.jpg",
-    "/images/banner4.jpg",
-    "/images/banner5.png",
-    "/images/banner6.jpg"
-  ];
-
-  let index = 0;
-  let bg1 = document.getElementById("bg1");
-  let bg2 = document.getElementById("bg2");
-  let toggle = true;
-
-  // ảnh đầu
-  bg1.style.backgroundImage = `url('${images[0]}')`;
-  bg1.style.opacity = 1;
-
-  setInterval(() => {
-    index = (index + 1) % images.length;
-
-    if (toggle) {
-      bg2.style.backgroundImage = `url('${images[index]}')`;
-      bg2.style.opacity = 1;
-      bg1.style.opacity = 0;
-    } else {
-      bg1.style.backgroundImage = `url('${images[index]}')`;
-      bg1.style.opacity = 1;
-      bg2.style.opacity = 0;
-    }
-
-    toggle = !toggle;
-  }, 2000);
-</script>
 
 </body>
 </html>
