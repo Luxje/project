@@ -30,4 +30,9 @@ public class ControllerGauBong {
     public String cart() {
         return "cart";
     }
+
+    @GetMapping("/changepass")
+    public String changepass() {
+        return "changepass"; // tên file doimatkhau.html
+    }
 }
