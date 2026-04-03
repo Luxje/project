@@ -64,8 +64,6 @@ public class admincontroller {
     @Autowired
     staffRepo repostaff;
 
-    @Autowired
-    userRepo urepo;
     @GetMapping("/staff")
     public String staff(Model model){
        model.addAttribute("listStaff",repostaff.findAll());
