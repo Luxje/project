@@ -43,10 +43,10 @@ public class UserController {
         return "register";
     }
 
-    @PostMapping("/register")
-    public String handleregister(@RequestParam("phone") String phone, @RequestParam("password") String password, Model model) {
-
-    }
+//    @PostMapping("/register")
+//    public String handleregister(@RequestParam("phone") String phone, @RequestParam("password") String password, Model model) {
+//
+//    }
 
 
 
