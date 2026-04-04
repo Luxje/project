@@ -26,8 +26,18 @@ public class ControllerGauBong {
         return "giohang";
     }
 
-    @GetMapping("/cart")
-    public String cart() {
-        return "cart";
+    @GetMapping("/sanpham")
+    public String sanpham() {
+        return "sanpham";
+    }
+
+    @GetMapping("/changepass")
+    public String changepass() {
+        return "changepass"; // tên file doimatkhau.html
+    }
+
+    @GetMapping("/login")
+    public String loginPage() {
+        return "login";
     }
 }
