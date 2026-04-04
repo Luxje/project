@@ -1,0 +1,124 @@
+/* TITLE */
+.title-product {
+    color: #5a3e2b;
+    font-weight: bold;
+    position: relative;
+}
+
+.title-product::after {
+    content: "";
+    display: block;
+    width: 80px;
+    height: 3px;
+    background: #d8c3a5;
+    margin: 10px auto;
+}
+
+/* CARD */
+.product-card {
+    border-radius: 15px;
+    overflow: hidden;
+    transition: 0.3s;
+}
+
+.product-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+/* IMAGE */
+.card-img-top {
+    height: 220px;
+    object-fit: cover;
+}
+
+/* PRICE */
+.price {
+    color: #e67e22;
+    font-weight: bold;
+}
+
+/* BUTTON */
+.btn-buy {
+    background-color: #d8c3a5;
+    border: none;
+    color: #5a3e2b;
+    border-radius: 20px;
+    padding: 6px 15px;
+    transition: 0.3s;
+}
+
+.btn-buy:hover {
+    background-color: #cbb08d;
+    color: #000;
+}
+
+/* Footer */
+.footer {
+    background-color: #f5e6d3;
+    padding: 40px 0 20px;
+    color: #5a3e2b;
+}
+
+/* Tiêu đề */
+.footer h5 {
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+/* List */
+.footer ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer ul li {
+    margin-bottom: 8px;
+}
+
+/* Link */
+.footer ul li a {
+    text-decoration: none;
+    color: #5a3e2b;
+    transition: 0.3s;
+}
+
+.footer ul li a:hover {
+    color: #000;
+}
+
+/* Bottom */
+.footer-bottom {
+    border-top: 1px solid #e0d0b8;
+    padding-top: 10px;
+    font-size: 14px;
+}
+
+/*images*/
+.banner-img {
+    height: 400px;
+    object-fit: cover;
+}
+
+.filter-box {
+    position: sticky;
+    top: 20px;
+    background: #fff;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.filter-box h5 {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.filter-box div {
+    margin-bottom: 8px;
+    cursor: pointer;
+}
+
+.filter-box input[type="checkbox"] {
+    margin-right: 8px;
+}

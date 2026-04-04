@@ -42,7 +42,7 @@
 <body>
 
 <div class="sidebar">
-    <a th:href="@{/admin/product}">Sản phẩm</a>
+    <a th:href="@{/admin/page}">Sản phẩm</a>
     <a th:href="@{/admin/invoice}">Hóa đơn</a>
     <a th:href="@{/admin/voucher}">Voucher</a>
     <a th:href="@{/admin/account}">Tài khoản</a>
@@ -54,6 +54,10 @@
     <!-- ================= PRODUCT ================= -->
     <div class="card">
         <h3>Quản lý sản phẩm</h3>
+         <form th:action="@{/admin/page/search}" method="get">
+             <input type="text" name="keyword" placeholder="nhập tên sản phẩm">
+             <button class="btn add">Tìm</button>
+         </form>
 
         <!-- FORM -->
         <form th:action="@{/admin/product/save}" method="post" th:object="${product}">
