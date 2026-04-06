@@ -15,4 +15,5 @@ public interface userRepo extends JpaRepository<user,Integer> {
     public boolean existsByPhone(String phone);
 
     public boolean existsById(int id);
+
 }

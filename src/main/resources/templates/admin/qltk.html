@@ -78,7 +78,7 @@
           <!-- BUTTON -->
           <div class="mt-3">
             <button class="btn btn-add" th:formaction="@{/admin/qltk/add}" type="submit">Thêm</button>
-            <button class="btn btn-edit" >Sửa</button>
+            <button class="btn btn-edit" th:formaction="@{/admin/qltk/update/{id}(id=${user.id})}" type="submit" >Sửa</button>
             <button class="btn btn-delete" >Xóa</button>
           </div>
 

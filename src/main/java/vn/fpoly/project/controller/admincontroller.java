@@ -173,5 +173,25 @@ public class admincontroller {
         }
     }
 
+    @PostMapping("/qltk/update/{id}")
+    public String updateUser(@PathVariable int id,
+                             @RequestParam("name") String name,
+                             @RequestParam("phone") String phone,
+                             @RequestParam("address") String address,
+                             @RequestParam("age") int age,
+                             @RequestParam("gender") boolean gender,
+                             @RequestParam("role") String role,
+                             @RequestParam("password") String password, Model model) {
+
+        user u = new user(id, name, role, phone, address, age, gender, password);
+        if (userService.update(u)) {
+            model.addAttribute("message", "Cập nhật thông tin tài khoản thành công");
+            return "redirect:/admin/qltk";
+        }else {
+            model.addAttribute("message", "Cập nhật thông tin thất bại");
+            return "redirect:/admin/qltk";
+        }
+    }
+
 
 }

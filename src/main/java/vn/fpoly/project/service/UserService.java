@@ -41,6 +41,21 @@ public class UserService {
         }
     }
 
+    public boolean update(user u) {
+        try {
+            if (!repo.existsById(u.getId())) {
+                return false;
+            }
+            else {
+                repo.save(u);
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
 
 
     public String validateRole(String phone) {
