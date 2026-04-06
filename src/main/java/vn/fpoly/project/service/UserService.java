@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import vn.fpoly.project.model.user;
 import vn.fpoly.project.repo.userRepo;
 
+import java.util.List;
+
 @Service
 public class UserService {
     final private userRepo repo;
@@ -56,5 +58,9 @@ public class UserService {
         return false;
     }
 
+
+    public List<user> findUserByName(String name) {
+        return repo.findByNameContaining(name);
+    }
 
 }
