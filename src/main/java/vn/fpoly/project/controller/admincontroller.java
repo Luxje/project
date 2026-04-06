@@ -141,4 +141,36 @@ public class admincontroller {
         model.addAttribute("lstTK", userService.findAll());
         return "/admin/qltk";
     }
+
+    @PostMapping("/qltk/add")
+    public String addUser(@RequestParam("name") String name,
+                          @RequestParam("phone") String phone,
+                          @RequestParam("address") String address,
+                          @RequestParam("age") int age,
+                          @RequestParam("gender") boolean gender,
+                          @RequestParam("password") String password, Model model) {
+
+        user u = new user(null, name, phone, address, age, gender, password);
+        if (userService.add(u)) {
+            model.addAttribute("message", "Thêm nhân viên thành công");
+            return "redirect:/admin/qltk";
+        }else {
+            model.addAttribute("message", "Thêm nhân viên thất bại");
+            return "/admin/qltk";
+        }
+    }
+
+    @DeleteMapping("/qltk/delete")
+    public String deleteUser(@RequestParam("id") int id, Model model) {
+
+        if (userService.delete(id)) {
+            model.addAttribute("message", "Xóa nhân viên thành công");
+            return "redirect:/admin/qltk";
+        }else {
+            model.addAttribute("message", "Xóa nhân viên thất bại");
+            return "redirect:/admin/qltk";
+        }
+    }
+
+
 }
