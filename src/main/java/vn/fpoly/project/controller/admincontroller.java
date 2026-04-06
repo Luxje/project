@@ -148,9 +148,10 @@ public class admincontroller {
                           @RequestParam("address") String address,
                           @RequestParam("age") int age,
                           @RequestParam("gender") boolean gender,
+                          @RequestParam("role") String role,
                           @RequestParam("password") String password, Model model) {
 
-        user u = new user(null, name, phone, address, age, gender, password);
+        user u = new user(null, name, role, phone, address, age, gender, password);
         if (userService.add(u)) {
             model.addAttribute("message", "Thêm nhân viên thành công");
             return "redirect:/admin/qltk";

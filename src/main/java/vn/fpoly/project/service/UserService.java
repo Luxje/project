@@ -20,7 +20,7 @@ public class UserService {
     public List<user> findAll() {
         return repo.findAll();
     }
-    
+
     public boolean add(user u) {
         if (u == null || u.getPhone() == null) {
             return false;
@@ -48,15 +48,7 @@ public class UserService {
         if (us == null) {
             return null;
         }
-        else if (us.getRole().equals("ADMIN")) {
-            return "ADMIN";
-        }
-        else if (us.getRole().equals("USER")) {
-            return "USER";
-        }else if (us.getRole().equals("CUSTOMER")) {
-            return "CUSTOMER";
-        }
-        return null;
+        return us.getRole();
     }
 
     public boolean validateLogin(String phone, String password) {
