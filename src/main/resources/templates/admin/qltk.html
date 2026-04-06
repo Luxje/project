@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản lý khách hàng</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+</head>
+
+<body>
+
+<div class="container-fluid">
+    <div class="row">
+
+        <!-- SIDEBAR -->
+        <div class="col-md-2 sidebar">
+            <h4>ADMIN</h4>
+
+            <a th:href="@{/admin/qlsp}">Quản lý sản phẩm</a>
+            <a th:href="@{/admin/qlkm}">Quản lý khuyến mãi</a>
+            <a th:href="@{/admin/qlkh}" class="active">Quản lý khách hàng</a>
+            <a th:href="@{/admin/qlnv}">Quản lý nhân viên</a>
+            <a th:href="@{/admin/qlhd}">Quản lý hóa đơn</a>
+        </div>
+
+        <!-- CONTENT -->
+        <div class="col-md-10 content">
+
+            <h3 class="title">Quản lý khách hàng</h3>
+
+            <!-- FORM -->
+            <div class="card card-custom mb-4">
+                <div class="card-body">
+
+                    <div class="row g-3">
+                        <div class="col-md-3">
+                            <input type="text" id="name" class="form-control" placeholder="Tên">
+                        </div>
+
+                        <div class="col-md-2">
+                            <select id="role" class="form-control">
+                                <option value="">-- Vai trò --</option>
+                                <option value="ADMIN">ADMIN</option>
+                                <option value="STAFF">STAFF</option>
+                                <option value="CUSTOMER">CUSTOMER</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-2">
+                            <input type="text" id="phone" class="form-control" placeholder="SĐT">
+                        </div>
+
+                        <div class="col-md-3">
+                            <input type="text" id="address" class="form-control" placeholder="Địa chỉ">
+                        </div>
+
+                        <div class="col-md-1">
+                            <input type="number" id="age" class="form-control" placeholder="Tuổi">
+                        </div>
+
+                        <div class="col-md-1">
+                            <select id="gender" class="form-control">
+                                <option value="">GT</option>
+                                <option value="1">Nam</option>
+                                <option value="0">Nữ</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-3">
+                            <input type="password" id="password" class="form-control" placeholder="Mật khẩu">
+                        </div>
+                    </div>
+
+                    <p id="error" class="text-danger mt-2"></p>
+
+                    <!-- BUTTON -->
+                    <div class="mt-3">
+                        <button class="btn btn-add" onclick="addCustomer()">Thêm</button>
+                        <button class="btn btn-edit" onclick="editCustomer()">Sửa</button>
+                        <button class="btn btn-delete" onclick="deleteCustomer()">Xóa</button>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="mb-3 d-flex justify-content-end">
+                <input type="text" id="searchInput"
+                       class="form-control w-25"
+                       placeholder="Tìm kiếm..."
+                       onkeyup="searchTable()">
+            </div>
+
+            <!-- TABLE -->
+            <div class="card card-custom">
+                <div class="card-body">
+
+                    <table class="table table-hover text-center">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Tên</th>
+                            <th>Role</th>
+                            <th>SĐT</th>
+                            <th>Địa chỉ</th>
+                            <th>Tuổi</th>
+                            <th>Giới tính</th>
+                        </tr>
+                        </thead>
+                        <tbody id="customerTable"></tbody>
+                    </table>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<script>
+    let users = [];
+    let currentId = 1;
+
+    // ===== VALIDATE =====
+    function validateUser(name, role, phone, age, password) {
+        if (name.trim() === "") return "Không được để trống tên!";
+        if (role === "") return "Chọn vai trò!";
+        if (phone.length < 9) return "SĐT không hợp lệ!";
+        if (age < 0) return "Tuổi không hợp lệ!";
+        if (password.trim() === "") return "Nhập mật khẩu!";
+        return "";
+    }
+
+    // ===== ADD =====
+    function addCustomer() {
+        let name = document.getElementById("name").value;
+        let role = document.getElementById("role").value;
+        let phone = document.getElementById("phone").value;
+        let address = document.getElementById("address").value;
+        let age = parseInt(document.getElementById("age").value);
+        let gender = document.getElementById("gender").value;
+        let password = document.getElementById("password").value;
+        let error = document.getElementById("error");
+
+        let check = validateUser(name, role, phone, age, password);
+
+        if (check !== "") {
+            error.innerText = check;
+            return;
+        }
+
+        error.innerText = "";
+
+        let user = {
+            id: currentId++,
+            name_user: name,
+            user_role: role,
+            user_phone: phone,
+            user_address: address,
+            user_age: age,
+            user_gender: gender,
+            user_password: password
+        };
+
+        users.push(user);
+        render();
+        clearForm();
+    }
+
+    // ===== DELETE =====
+    function deleteCustomer() {
+        if (users.length === 0) return;
+        users.pop();
+        render();
+    }
+
+    // ===== EDIT =====
+    function editCustomer() {
+        if (users.length === 0) return;
+
+        let name = document.getElementById("name").value;
+        let role = document.getElementById("role").value;
+        let phone = document.getElementById("phone").value;
+        let address = document.getElementById("address").value;
+        let age = parseInt(document.getElementById("age").value);
+        let gender = document.getElementById("gender").value;
+        let password = document.getElementById("password").value;
+        let error = document.getElementById("error");
+
+        let check = validateUser(name, role, phone, age, password);
+
+        if (check !== "") {
+            error.innerText = check;
+            return;
+        }
+
+        let last = users[users.length - 1];
+
+        last.name_user = name;
+        last.user_role = role;
+        last.user_phone = phone;
+        last.user_address = address;
+        last.user_age = age;
+        last.user_gender = gender;
+        last.user_password = password;
+
+        render();
+        clearForm();
+    }
+
+    // ===== RENDER =====
+    function render() {
+        let table = document.getElementById("customerTable");
+        table.innerHTML = "";
+
+        users.forEach(u => {
+            table.innerHTML += `
+                <tr>
+                    <td>${u.id}</td>
+                    <td>${u.name_user}</td>
+                    <td>${u.user_role}</td>
+                    <td>${u.user_phone}</td>
+                    <td>${u.user_address}</td>
+                    <td>${u.user_age}</td>
+                    <td>${u.user_gender == 1 ? "Nam" : "Nữ"}</td>
+                </tr>
+            `;
+        });
+    }
+
+    // ===== SEARCH =====
+    function searchTable() {
+        let keyword = document.getElementById("searchInput").value.toLowerCase();
+        let table = document.getElementById("customerTable");
+        table.innerHTML = "";
+
+        let filtered = users.filter(u =>
+            u.name_user.toLowerCase().includes(keyword)
+        );
+
+        filtered.forEach(u => {
+            table.innerHTML += `
+                <tr>
+                    <td>${u.id}</td>
+                    <td>${u.name_user}</td>
+                    <td>${u.user_role}</td>
+                    <td>${u.user_phone}</td>
+                    <td>${u.user_address}</td>
+                    <td>${u.user_age}</td>
+                    <td>${u.user_gender == 1 ? "Nam" : "Nữ"}</td>
+                </tr>
+            `;
+        });
+    }
+
+    // ===== CLEAR =====
+    function clearForm() {
+        document.getElementById("name").value = "";
+        document.getElementById("role").value = "";
+        document.getElementById("phone").value = "";
+        document.getElementById("address").value = "";
+        document.getElementById("age").value = "";
+        document.getElementById("gender").value = "";
+        document.getElementById("password").value = "";
+    }
+</script>
+
+</body>
+</html>

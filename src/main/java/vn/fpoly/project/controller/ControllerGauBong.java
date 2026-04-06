@@ -57,7 +57,7 @@ public class ControllerGauBong {
 
     @GetMapping("/admin/qlkh")
     public String customers() {
-        return "admin/qlkh";
+        return "qltk";
     }
 
     @GetMapping("/admin/qlnv")

@@ -19,7 +19,7 @@
 
             <a th:href="@{/admin/qlsp}">Quản lý sản phẩm</a>
             <a th:href="@{/admin/qlkm}" class="active">Quản lý khuyến mãi</a>
-            <a th:href="@{/admin/qlkh}">Quản lý khách hàng</a>
+            <a th:href="@{/admin/qlkh}">Quản lý tài khoản</a>
             <a th:href="@{/admin/qlnv}">Quản lý nhân viên</a>
             <a th:href="@{/admin/qlhd}">Quản lý hóa đơn</a>
         </div>
@@ -39,7 +39,7 @@
                         </div>
 
                         <div class="col-md-3">
-                            <input type="number" id="discount" class="form-control" placeholder="% giảm">
+                            <input type="number" id="discount" class="form-control" placeholder="Giá trị giảm (VND)">
                         </div>
 
                         <div class="col-md-3">
@@ -77,8 +77,9 @@
                     <table class="table table-hover text-center">
                         <thead>
                         <tr>
+                            <th>ID</th>
                             <th>Tên</th>
-                            <th>% Giảm</th>
+                            <th>Giá trị</th>
                             <th>Bắt đầu</th>
                             <th>Kết thúc</th>
                         </tr>
@@ -95,24 +96,27 @@
 </div>
 
 <script>
-    let promotions = [];
+    let vouchers = [];
+    let currentId = 1;
 
-    function validatePromo(name, discount, start, end) {
-        if (name === "") return "Không được để trống tên!";
-        if (discount <= 0 || discount > 100) return "Giảm từ 1 - 100%!";
+    // ===== VALIDATE =====
+    function validateVoucher(name, value, start, end) {
+        if (name.trim() === "") return "Không được để trống tên!";
+        if (value < 0) return "Giá trị phải >= 0!";
         if (start === "" || end === "") return "Chọn ngày!";
         if (start > end) return "Ngày bắt đầu phải trước ngày kết thúc!";
         return "";
     }
 
+    // ===== ADD =====
     function addPromo() {
         let name = document.getElementById("promoName").value;
-        let discount = document.getElementById("discount").value;
+        let value = parseFloat(document.getElementById("discount").value);
         let start = document.getElementById("startDate").value;
         let end = document.getElementById("endDate").value;
-
         let error = document.getElementById("error");
-        let check = validatePromo(name, discount, start, end);
+
+        let check = validateVoucher(name, value, start, end);
 
         if (check !== "") {
             error.innerText = check;
@@ -121,48 +125,101 @@
 
         error.innerText = "";
 
-        promotions.push({ name, discount, start, end });
+        let voucher = {
+            id: currentId++,
+            voucher_name: name,
+            voucher_value: value,
+            voucher_start: start,
+            voucher_end: end
+        };
+
+        vouchers.push(voucher);
         render();
+        clearForm();
     }
 
+    // ===== DELETE =====
     function deletePromo() {
-        promotions.pop();
+        if (vouchers.length === 0) return;
+        vouchers.pop();
         render();
     }
 
+    // ===== EDIT =====
     function editPromo() {
-        if (promotions.length === 0) return;
+        if (vouchers.length === 0) return;
 
         let name = document.getElementById("promoName").value;
-        let discount = document.getElementById("discount").value;
+        let value = parseFloat(document.getElementById("discount").value);
         let start = document.getElementById("startDate").value;
         let end = document.getElementById("endDate").value;
+        let error = document.getElementById("error");
 
-        let check = validatePromo(name, discount, start, end);
+        let check = validateVoucher(name, value, start, end);
 
         if (check !== "") {
-            document.getElementById("error").innerText = check;
+            error.innerText = check;
             return;
         }
 
-        promotions[promotions.length - 1] = { name, discount, start, end };
+        let last = vouchers[vouchers.length - 1];
+
+        last.voucher_name = name;
+        last.voucher_value = value;
+        last.voucher_start = start;
+        last.voucher_end = end;
+
         render();
+        clearForm();
     }
 
+    // ===== RENDER =====
     function render() {
         let table = document.getElementById("promoTable");
         table.innerHTML = "";
 
-        promotions.forEach(p => {
+        vouchers.forEach(v => {
             table.innerHTML += `
-            <tr>
-                <td>${p.name}</td>
-                <td>${p.discount}%</td>
-                <td>${p.start}</td>
-                <td>${p.end}</td>
-            </tr>
-        `;
+                <tr>
+                    <td>${v.id}</td>
+                    <td>${v.voucher_name}</td>
+                    <td>${v.voucher_value}</td>
+                    <td>${v.voucher_start}</td>
+                    <td>${v.voucher_end}</td>
+                </tr>
+            `;
         });
+    }
+
+    // ===== SEARCH =====
+    function searchTable() {
+        let keyword = document.getElementById("searchInput").value.toLowerCase();
+        let table = document.getElementById("promoTable");
+        table.innerHTML = "";
+
+        let filtered = vouchers.filter(v =>
+            v.voucher_name.toLowerCase().includes(keyword)
+        );
+
+        filtered.forEach(v => {
+            table.innerHTML += `
+                <tr>
+                    <td>${v.id}</td>
+                    <td>${v.voucher_name}</td>
+                    <td>${v.voucher_value}</td>
+                    <td>${v.voucher_start}</td>
+                    <td>${v.voucher_end}</td>
+                </tr>
+            `;
+        });
+    }
+
+    // ===== CLEAR FORM =====
+    function clearForm() {
+        document.getElementById("promoName").value = "";
+        document.getElementById("discount").value = "";
+        document.getElementById("startDate").value = "";
+        document.getElementById("endDate").value = "";
     }
 </script>
 

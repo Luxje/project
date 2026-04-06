@@ -41,15 +41,19 @@ public class UserService {
         return false;
     }
 
-    public boolean passwordChange(String phone, String newPassword) {
+    public boolean passwordChange(String phone, String newPassword, String confirmPassword) {
+        if (newPassword.equals(confirmPassword)) {
         user us = repo.findByPhone(phone);
         if (us == null) {
             return false;
         }
         else {
             us.setPassword(newPassword);
+            repo.save(us);
             return true;
         }
+        }
+        return false;
     }
 
 

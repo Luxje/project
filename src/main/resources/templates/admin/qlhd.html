@@ -19,7 +19,7 @@
 
             <a th:href="@{/admin/qlsp}">Quản lý sản phẩm</a>
             <a th:href="@{/admin/qlkm}">Quản lý khuyến mãi</a>
-            <a th:href="@{/admin/qlkh}">Quản lý khách hàng</a>
+            <a th:href="@{/admin/qlkh}">Quản lý tài khoản</a>
             <a th:href="@{/admin/qlnv}">Quản lý nhân viên</a>
             <a th:href="@{/admin/qlhd}" class="active">Quản lý hóa đơn</a>
         </div>
@@ -35,23 +35,27 @@
 
                     <div class="row g-3">
                         <div class="col-md-3">
-                            <input type="text" id="customer" class="form-control" placeholder="Tên khách">
+                            <input type="text" id="name" class="form-control" placeholder="Tên hóa đơn">
                         </div>
 
                         <div class="col-md-3">
-                            <input type="number" id="quantity" class="form-control" placeholder="Số lượng">
+                            <input type="number" id="total" class="form-control" placeholder="Tổng tiền">
+                        </div>
+
+                        <div class="col-md-2">
+                            <input type="number" id="voucher" class="form-control" placeholder="Voucher ID">
+                        </div>
+
+                        <div class="col-md-2">
+                            <input type="number" id="staff" class="form-control" placeholder="Staff ID">
+                        </div>
+
+                        <div class="col-md-2">
+                            <input type="number" id="customer" class="form-control" placeholder="Customer ID">
                         </div>
 
                         <div class="col-md-3">
-                            <input type="number" id="price" class="form-control" placeholder="Đơn giá">
-                        </div>
-
-                        <div class="col-md-3">
-                            <select id="status" class="form-control">
-                                <option value="">-- Trạng thái --</option>
-                                <option>Chưa thanh toán</option>
-                                <option>Đã thanh toán</option>
-                            </select>
+                            <input type="date" id="date" class="form-control">
                         </div>
                     </div>
 
@@ -81,11 +85,13 @@
                     <table class="table table-hover text-center">
                         <thead>
                         <tr>
-                            <th>Khách</th>
-                            <th>Số lượng</th>
-                            <th>Đơn giá</th>
+                            <th>ID</th>
+                            <th>Tên</th>
                             <th>Tổng tiền</th>
-                            <th>Trạng thái</th>
+                            <th>Voucher</th>
+                            <th>Staff</th>
+                            <th>Customer</th>
+                            <th>Ngày</th>
                         </tr>
                         </thead>
                         <tbody id="orderTable"></tbody>
@@ -100,24 +106,28 @@
 </div>
 
 <script>
-    let orders = [];
+    let invoices = [];
+    let currentId = 1;
 
-    function validateOrder(customer, quantity, price, status) {
-        if (customer === "") return "Nhập tên khách!";
-        if (quantity <= 0) return "Số lượng phải > 0!";
-        if (price <= 0) return "Giá phải > 0!";
-        if (status === "") return "Chọn trạng thái!";
+    // ===== VALIDATE =====
+    function validateInvoice(name, total, staff, customer) {
+        if (name.trim() === "") return "Không được để trống tên!";
+        if (total <= 0) return "Tổng tiền phải > 0!";
+        if (staff === "" || customer === "") return "Thiếu staff hoặc customer!";
         return "";
     }
 
+    // ===== ADD =====
     function addOrder() {
+        let name = document.getElementById("name").value;
+        let total = parseFloat(document.getElementById("total").value);
+        let voucher = document.getElementById("voucher").value;
+        let staff = document.getElementById("staff").value;
         let customer = document.getElementById("customer").value;
-        let quantity = Number(document.getElementById("quantity").value);
-        let price = Number(document.getElementById("price").value);
-        let status = document.getElementById("status").value;
-
+        let date = document.getElementById("date").value;
         let error = document.getElementById("error");
-        let check = validateOrder(customer, quantity, price, status);
+
+        let check = validateInvoice(name, total, staff, customer);
 
         if (check !== "") {
             error.innerText = check;
@@ -126,53 +136,113 @@
 
         error.innerText = "";
 
-        let total = quantity * price;
+        let invoice = {
+            id: currentId++,
+            invoice_name: name,
+            total_price: total,
+            voucher_id: voucher || null,
+            staff_id: staff,
+            customer_id: customer,
+            invoice_date: date || new Date().toISOString().split("T")[0]
+        };
 
-        orders.push({ customer, quantity, price, total, status });
+        invoices.push(invoice);
         render();
+        clearForm();
     }
 
+    // ===== DELETE =====
     function deleteOrder() {
-        orders.pop();
+        if (invoices.length === 0) return;
+        invoices.pop();
         render();
     }
 
+    // ===== EDIT =====
     function editOrder() {
-        if (orders.length === 0) return;
+        if (invoices.length === 0) return;
 
+        let name = document.getElementById("name").value;
+        let total = parseFloat(document.getElementById("total").value);
+        let voucher = document.getElementById("voucher").value;
+        let staff = document.getElementById("staff").value;
         let customer = document.getElementById("customer").value;
-        let quantity = Number(document.getElementById("quantity").value);
-        let price = Number(document.getElementById("price").value);
-        let status = document.getElementById("status").value;
+        let date = document.getElementById("date").value;
+        let error = document.getElementById("error");
 
-        let check = validateOrder(customer, quantity, price, status);
+        let check = validateInvoice(name, total, staff, customer);
 
         if (check !== "") {
-            document.getElementById("error").innerText = check;
+            error.innerText = check;
             return;
         }
 
-        let total = quantity * price;
+        let last = invoices[invoices.length - 1];
 
-        orders[orders.length - 1] = { customer, quantity, price, total, status };
+        last.invoice_name = name;
+        last.total_price = total;
+        last.voucher_id = voucher || null;
+        last.staff_id = staff;
+        last.customer_id = customer;
+        last.invoice_date = date;
+
         render();
+        clearForm();
     }
 
+    // ===== RENDER =====
     function render() {
         let table = document.getElementById("orderTable");
         table.innerHTML = "";
 
-        orders.forEach(o => {
+        invoices.forEach(i => {
             table.innerHTML += `
-            <tr>
-                <td>${o.customer}</td>
-                <td>${o.quantity}</td>
-                <td>${o.price}</td>
-                <td>${o.total}</td>
-                <td>${o.status}</td>
-            </tr>
-        `;
+                <tr>
+                    <td>${i.id}</td>
+                    <td>${i.invoice_name}</td>
+                    <td>${i.total_price}</td>
+                    <td>${i.voucher_id ?? ""}</td>
+                    <td>${i.staff_id}</td>
+                    <td>${i.customer_id}</td>
+                    <td>${i.invoice_date}</td>
+                </tr>
+            `;
         });
+    }
+
+    // ===== SEARCH =====
+    function searchTable() {
+        let keyword = document.getElementById("searchInput").value.toLowerCase();
+        let table = document.getElementById("orderTable");
+        table.innerHTML = "";
+
+        let filtered = invoices.filter(i =>
+            i.invoice_name.toLowerCase().includes(keyword)
+        );
+
+        filtered.forEach(i => {
+            table.innerHTML += `
+                <tr>
+                    <td>${i.id}</td>
+                    <td>${i.invoice_name}</td>
+                    <td>${i.total_price}</td>
+                    <td>${i.voucher_id ?? ""}</td>
+                    <td>${i.staff_id}</td>
+                    <td>${i.customer_id}</td>
+                    <td>${i.invoice_date}</td>
+                </tr>
+            `;
+        });
+    }
+
+    // ===== CLEAR FORM =====
+    function clearForm() {
+        document.getElementById("name").value = "";
+        document.getElementById("total").value = "";
+        document.getElementById("voucher").value = "";
+        document.getElementById("staff").value = "";
+        document.getElementById("customer").value = "";
+        document.getElementById("date").value = "";
     }
 </script>
 
