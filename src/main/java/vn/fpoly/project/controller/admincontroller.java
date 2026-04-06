@@ -125,13 +125,20 @@ public class admincontroller {
 
     @GetMapping("/user/search")
     public String search(@RequestParam("search") String searchInput, Model model) {
-        List<user> lstUser = userService.findUserByName(searchInput);
-        if (lstUser == null){
+        List<user> lstTK = userService.findUserByName(searchInput);
+        if (lstTK == null){
             model.addAttribute("message", "Không tìm thấy nhân viên với tên: " + searchInput);
-            return "adminpage";
+            return "/admin/qltk";
         }else {
-            model.addAttribute("lstUser", lstUser);
-            return "adminpage";
+            model.addAttribute("lstTK", lstTK);
+            return "/admin/qltk";
         }
+    }
+
+
+    @GetMapping("/qltk")
+    public String qltk(Model model) {
+        model.addAttribute("lstTK", userService.findAll());
+        return "/admin/qltk";
     }
 }

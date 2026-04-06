@@ -16,6 +16,12 @@ public class UserService {
         this.repo = repo;
     }
 
+
+    public List<user> findAll() {
+        return repo.findAll();
+    }
+
+
     public String validateRole(String phone) {
         user us = repo.findByPhone(phone);
         if (us == null) {
