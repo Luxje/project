@@ -20,6 +20,27 @@ public class UserService {
     public List<user> findAll() {
         return repo.findAll();
     }
+    
+    public boolean add(user u) {
+        if (u == null || u.getPhone() == null) {
+            return false;
+        } else if (repo.existsByPhone(u.getPhone())) {
+            return false;
+        }
+            repo.save(u);
+            return true;
+    }
+
+    public boolean delete(int id) {
+        if (!repo.existsById(id)) {
+            return false;
+        }
+        else {
+            repo.deleteById(id);
+            return true;
+        }
+    }
+
 
 
     public String validateRole(String phone) {

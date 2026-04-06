@@ -48,19 +48,19 @@
             </div>
 
             <div class="col-md-2">
-              <input type="text" id="phone" class="form-control" placeholder="SĐT">
+              <input type="text" id="phone" class="form-control" name="phone" placeholder="SĐT">
             </div>
 
             <div class="col-md-3">
-              <input type="text" id="address" class="form-control" placeholder="Địa chỉ">
+              <input type="text" id="address" class="form-control" name="address" placeholder="Địa chỉ">
             </div>
 
             <div class="col-md-1">
-              <input type="number" id="age" class="form-control" placeholder="Tuổi">
+              <input type="number" id="age" class="form-control" name="age" placeholder="Tuổi">
             </div>
 
             <div class="col-md-1">
-              <select id="gender" class="form-control">
+              <select id="gender" class="form-control" name="gender">
                 <option value="">GT</option>
                 <option value="1">Nam</option>
                 <option value="0">Nữ</option>
@@ -68,7 +68,7 @@
             </div>
 
             <div class="col-md-3">
-              <input type="password" id="password" class="form-control" placeholder="Mật khẩu">
+              <input type="password" id="password" class="form-control" name="password" placeholder="Mật khẩu">
             </div>
           </div>
 
@@ -76,9 +76,9 @@
 
           <!-- BUTTON -->
           <div class="mt-3">
-            <button class="btn btn-add" onclick="addCustomer()">Thêm</button>
-            <button class="btn btn-edit" onclick="editCustomer()">Sửa</button>
-            <button class="btn btn-delete" onclick="deleteCustomer()">Xóa</button>
+            <button class="btn btn-add" >Thêm</button>
+            <button class="btn btn-edit" >Sửa</button>
+            <button class="btn btn-delete" >Xóa</button>
           </div>
 
         </div>
@@ -129,8 +129,6 @@
 </div>
 
 <script>
-  let users = [];
-  let currentId = 1;
 
   // ===== VALIDATE =====
   function validateUser(name, role, phone, age, password) {
