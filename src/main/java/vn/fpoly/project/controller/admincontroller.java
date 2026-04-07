@@ -8,7 +8,6 @@ import vn.fpoly.project.model.*;
 import vn.fpoly.project.repo.*;
 import vn.fpoly.project.service.UserService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -202,7 +201,7 @@ public class admincontroller {
     }
 
 
-    @GetMapping("qltk/search")
+    @GetMapping("/qltk/search")
     public String searchUser(@RequestParam("searchInput") String searchInput, Model model) {
         if (searchInput == null) {
             model.addAttribute("message", "Không tìm thấy nhân viên nào với tên:" + searchInput);
@@ -213,6 +212,11 @@ public class admincontroller {
         }
     }
 
+
+    @GetMapping("/tkdt")
+    public String statistical() {
+        return "/admin/tkdt";
+    }
 
 
 
