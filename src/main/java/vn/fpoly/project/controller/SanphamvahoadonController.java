@@ -79,4 +79,9 @@ public class SanphamvahoadonController {
       return "index";
 
   }
+  @GetMapping("/khuyenmai")
+    public String voucher(Model model){
+      model.addAttribute("vouchers",voucher.findAll());
+      return "voucher";
+  }
 }
