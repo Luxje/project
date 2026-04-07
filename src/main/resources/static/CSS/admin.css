@@ -94,3 +94,27 @@ body {
     border-color: #5a3e2b;
     box-shadow: 0 0 5px rgba(90, 62, 43, 0.3);
 }
+
+/* ===== DASHBOARD EXTRA ===== */
+.card-custom h5 {
+    color: #5a3e2b;
+    font-weight: bold;
+}
+
+/* CHART */
+canvas {
+    max-height: 300px;
+}
+
+/* HOVER CARD NHẸ */
+.card-custom:hover {
+    transform: translateY(-3px);
+    transition: 0.2s;
+}
+
+/* TEXT NHỎ TRONG CARD */
+.card-custom p {
+    font-size: 14px;
+    color: #777;
+    margin-bottom: 5px;
+}
