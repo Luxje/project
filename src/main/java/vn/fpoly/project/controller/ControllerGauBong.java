@@ -74,4 +74,9 @@ public class ControllerGauBong {
     public String taikhoan() {
         return "taikhoan";
     }
+
+    @GetMapping("/admin/tkdt")
+    public String thongke() {
+        return "admin/tkdt";
+    }
 }
