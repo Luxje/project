@@ -34,7 +34,15 @@
       <div class="card card-custom mb-4">
         <div class="card-body">
 
+
           <div class="row g-3">
+            <div class="col-md-3">
+              <input type="text" id="id" th:value="${user.id}" name="id" th:hidden="true">
+            </div>
+
+
+
+            <div class="row g-3">
             <div class="col-md-3">
               <input type="text" id="name" class="form-control" name="name" placeholder="Tên">
             </div>
@@ -106,6 +114,7 @@
               <th>Địa chỉ</th>
               <th>Tuổi</th>
               <th>Giới tính</th>
+              <th>Action</th>
             </tr>
             </thead>
             <tbody id="customerTable">
@@ -117,6 +126,9 @@
               <td th:text="${tk.address}"></td>
               <td th:text="${tk.age}"></td>
               <td th:text="${tk.gender? 'Nam' : 'Nu'}"></td>
+              <td>
+                <a th:href="@{/admin/qltk/detali/(id=${tk.id})}">Detail</a>
+              </td>
             </tr>
             </tbody>
           </table>

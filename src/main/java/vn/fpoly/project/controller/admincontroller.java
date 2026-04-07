@@ -173,8 +173,16 @@ public class admincontroller {
         }
     }
 
-    @PostMapping("/qltk/update/{id}")
-    public String updateUser(@PathVariable int id,
+    @GetMapping("/qltk/detali/{id}")
+    public String detailUser(@PathVariable("id") int id ,Model model) {
+        user us = userService.findById(id);
+        model.addAttribute("user", us);
+        return "/admin/qltk";
+    }
+
+
+    @PostMapping("/qltk/update")
+    public String updateUser(@RequestParam int id,
                              @RequestParam("name") String name,
                              @RequestParam("phone") String phone,
                              @RequestParam("address") String address,
@@ -192,6 +200,20 @@ public class admincontroller {
             return "redirect:/admin/qltk";
         }
     }
+
+
+    @GetMapping("qltk/search")
+    public String searchUser(@RequestParam("searchInput") String searchInput, Model model) {
+        if (searchInput == null) {
+            model.addAttribute("message", "Không tìm thấy nhân viên nào với tên:" + searchInput);
+            return "/admin/qltk";
+        }else {
+            model.addAttribute("lstTK", userService.findUserByName(searchInput));
+            return "/admin/qltk";
+        }
+    }
+
+
 
 
 }
