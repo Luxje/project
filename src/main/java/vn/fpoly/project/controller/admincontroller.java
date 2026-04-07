@@ -104,4 +104,11 @@ public class admincontroller {
         model.addAttribute("product",new products());
         return "adminpage";
     }
+    @GetMapping("/user")
+    public String userlist(Model model){
+        model.addAttribute("acounts",urepo.findAll());
+        model.addAttribute("account",new user());
+        return "adminqluser";
+
+    }
 }
