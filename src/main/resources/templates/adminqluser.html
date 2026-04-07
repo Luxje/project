@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Tài Khoản - Gấu Bông Store</title>
+
+    <!-- Bootstrap 5 + Font Awesome -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #ffeef8 0%, #f0f8ff 100%);
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .header {
+            background: linear-gradient(90deg, #ff8fab, #ffc2d9);
+            color: white;
+            padding: 1.5rem 0;
+            box-shadow: 0 4px 15px rgba(255, 143, 171, 0.3);
+        }
+
+        .teddy-icon {
+            font-size: 2.5rem;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .card {
+            border: none;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(255, 143, 171, 0.2);
+            overflow: hidden;
+        }
+
+        .table {
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .table thead {
+            background: linear-gradient(90deg, #ff8fab, #fb6f92);
+            color: white;
+        }
+
+        .btn-teddy {
+            border-radius: 50px;
+            padding: 8px 20px;
+            font-weight: 600;
+        }
+
+        .btn-edit {
+            background-color: #a2d2ff;
+            color: #333;
+        }
+
+        .btn-delete {
+            background-color: #ff8fab;
+            color: white;
+        }
+
+        .search-box {
+            border-radius: 50px;
+            padding: 12px 20px;
+            border: 2px solid #ff8fab;
+        }
+
+        .gender-male { color: #4cc9f0; }
+        .gender-female { color: #fb6f92; }
+    </style>
+</head>
+<body>
+
+<div class="header text-center">
+    <div class="container">
+        <h1>
+            <span class="teddy-icon">🧸</span>
+            Quản Lý Tài Khoản Gấu Bông
+            <span class="teddy-icon">🧸</span>
+        </h1>
+        <p class="mb-0">Admin Panel - Teddy Bear Store</p>
+    </div>
+</div>
+
+<div class="container mt-4">
+
+    <!-- Form Tìm kiếm -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <form th:action="@{/admin/accounts/search}" method="get" class="row g-3 align-items-center">
+                <div class="col-md-8">
+                    <input type="text"
+                           class="form-control search-box"
+                           name="keyword"
+                           th:value="${keyword}"
+                           placeholder="🔍 Tìm kiếm theo tên tài khoản...">
+                </div>
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-primary btn-teddy w-100">
+                        <i class="fas fa-search"></i> Tìm kiếm
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Nút Thêm mới -->
+    <div class="mb-3 text-end">
+        <button class="btn btn-success btn-teddy"><i class="fas fa-plus"></i> Thêm Tài Khoản Mới</button>
+
+    </div>
+
+    <!-- Bảng Danh sách Tài khoản -->
+    <div class="card">
+        <div class="card-header bg-white border-0">
+            <h5 class="mb-0 text-pink">
+                <i class="fas fa-list"></i> Danh sách Tài khoản
+            </h5>
+        </div>
+        <div class="card-body p-0">
+            <table class="table table-hover mb-0">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Tên Người Dùng</th>
+                    <th>Vai Trò</th>
+                    <th>Số Điện Thoại</th>
+                    <th>Địa Chỉ</th>
+                    <th>Tuổi</th>
+                    <th>Giới Tính</th>
+                    <th class="text-center">Hành Động</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="account : ${accounts}">
+                    <td th:text="${account.id}"></td>
+                    <td th:text="${account.name_user}"></td>
+                    <td>
+                            <span class="badge"
+                                  th:class="${account.user_role == 'ADMIN'} ? 'bg-danger' : 'bg-info'"
+                                  th:text="${account.user_role}">
+                            </span>
+                    </td>
+                    <td th:text="${account.user_phone}"></td>
+                    <td th:text="${account.user_address}"></td>
+                    <td th:text="${account.user_age}"></td>
+                    <td>
+                        <i th:if="${account.user_gender == 1}" class="fas fa-mars gender-male" title="Nam"></i>
+                        <i th:if="${account.user_gender == 0}" class="fas fa-venus gender-female" title="Nữ"></i>
+                        <span th:text="${account.user_gender == 1} ? 'Nam' : 'Nữ'"></span>
+                    </td>
+                    <td class="text-center">
+                        <div class="btn-group">
+                            <!-- Edit -->
+                            <a th:href="@{/admin/accounts/edit/{id}(id=${account.id})}"
+                               class="btn btn-sm btn-edit btn-teddy">
+                                <i class="fas fa-edit"></i> Sửa
+                            </a>
+
+                            <!-- Delete -->
+                            <form th:action="@{/admin/accounts/delete/{id}(id=${account.id})}"
+                                  method="post" style="display: inline;">
+                                <input type="hidden" name="_csrf" th:value="${_csrf.token}" th:if="${_csrf != null}"/>
+                                <button type="submit"
+                                        class="btn btn-sm btn-delete btn-teddy"
+                                        onclick="return confirm('Bạn có chắc chắn muốn xóa tài khoản này không? 🧸')">
+                                    <i class="fas fa-trash"></i> Xóa
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Form Thêm/Sửa (có thể dùng riêng hoặc chung) -->
+<!-- Nếu bạn muốn form thêm/sửa nằm chung trang, có thể thêm modal ở đây -->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

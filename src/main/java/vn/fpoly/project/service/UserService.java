@@ -26,6 +26,8 @@ public class UserService {
             return "USER";
         }else if (us.getRole().equals("CUSTOMER")) {
             return "CUSTOMER";
+        }else if (us.getRole().equals("STAFF")) {
+            return "STAFF";
         }
         return null;
     }
