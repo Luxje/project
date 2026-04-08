@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Voucher Gấu Bông</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap');
+
+    body {
+      margin: 0;
+      background: linear-gradient(135deg, #ffebee 0%, #f8bbd0 100%);
+      font-family: 'Comic Neue', cursive;
+      color: #5d4037;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    .teddy-icon {
+      font-size: 60px;
+      animation: bounce 2s infinite;
+    }
+
+    h1 {
+      font-size: 42px;
+      color: #d81b60;
+      text-shadow: 3px 3px 0px #fff;
+      margin: 0;
+    }
+
+    .search-bar {
+      background: white;
+      padding: 15px 25px;
+      border-radius: 50px;
+      box-shadow: 0 10px 25px rgba(233, 30, 99, 0.15);
+      margin: 30px auto;
+      max-width: 600px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .search-bar input {
+      flex: 1;
+      border: none;
+      outline: none;
+      font-size: 18px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 15px 35px rgba(233, 30, 99, 0.2);
+    }
+
+    th {
+      background: linear-gradient(90deg, #ff4081, #f06292);
+      color: white;
+      padding: 18px 15px;
+      text-align: left;
+    }
+
+    td {
+      padding: 18px 15px;
+      border-bottom: 1px solid #fce4ec;
+    }
+
+    tr:hover {
+      background-color: #fff0f5;
+      transition: all 0.2s;
+    }
+
+    .voucher-name a {
+      color: #d81b60;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 18px;
+    }
+
+    .voucher-name a:hover {
+      color: #ad1457;
+      text-decoration: underline;
+    }
+
+    .date {
+      color: #c2185b;
+      font-weight: 500;
+    }
+
+    .value {
+      font-size: 20px;
+      font-weight: bold;
+      color: #e91e63;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <div class="header-content">
+      <span class="teddy-icon">🧸</span>
+      <h1>Voucher Gấu Bông</h1>
+      <span class="teddy-icon">🧸</span>
+    </div>
+  </header>
+
+  <!-- Search -->
+  <div class="search-bar">
+    <input type="text" id="searchInput" placeholder="Tìm kiếm theo tên voucher...">
+  </div>
+
+  <!-- Table -->
+  <table>
+    <thead>
+    <tr>
+      <th>Tên Voucher</th>
+      <th>Giá Trị</th>
+      <th>Ngày Bắt Đầu</th>
+      <th>Ngày Kết Thúc</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="voucher : ${vouchers}">
+      <td class="voucher-name" th:text="${voucher.name}">
+      </td>
+      <td class="value" th:text="${voucher.value}"></td>
+      <td class="date" th:text="${voucher.startdate}"></td>
+      <td class="date" th:text="${voucher.enddate}"></td>
+      <td style="text-align: center;">
+
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <!-- Thông báo khi không có voucher -->
+  <div th:if="${vouchers.isEmpty()}" style="text-align: center; padding: 50px; color: #c2185b;">
+    <h2>🧸 Hiện tại chưa có voucher nào 🧸</h2>
+  </div>
+</div>
+
+<script>
+  // Tìm kiếm theo tên voucher (client-side)
+  document.getElementById('searchInput').addEventListener('input', function() {
+    const filter = this.value.toLowerCase().trim();
+    const rows = document.querySelectorAll('tbody tr');
+
+    rows.forEach(row => {
+      const nameCell = row.cells[0];
+      const name = nameCell ? nameCell.textContent.toLowerCase() : '';
+      row.style.display = name.includes(filter) ? '' : 'none';
+    });
+  });
+</script>
+
+</body>
+</html>
