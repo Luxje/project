@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import vn.fpoly.project.model.*;
 import vn.fpoly.project.repo.*;
+import vn.fpoly.project.service.UserService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,12 +19,14 @@ public class admincontroller {
     final private userRepo urepo;
     final private invoicesRepo repoinvoice;
     final private voucherRepo vrepo;
+    final private UserService userService;
 
-    public admincontroller(productRepo repo, invoicesRepo repoinvoice, voucherRepo vrepo, userRepo urepo) {
+    public admincontroller(productRepo repo, invoicesRepo repoinvoice, voucherRepo vrepo, userRepo urepo, UserService userService) {
         this.repo = repo;
         this.repoinvoice = repoinvoice;
         this.vrepo = vrepo;
         this.urepo = urepo;
+        this.userService = userService;
     }
 
     @GetMapping("/page")
@@ -107,5 +110,18 @@ public class admincontroller {
         model.addAttribute("listProduct",repo.searchproduct(name));
         model.addAttribute("product",new products());
         return "adminpage";
+    }
+
+
+    @GetMapping("/user/search")
+    public String search(@RequestParam("search") String searchInput, Model model) {
+        List<user> lstUser = userService.findUserByName(searchInput);
+        if (lstUser == null){
+            model.addAttribute("message", "Không tìm thấy nhân viên với tên: " + searchInput);
+            return "adminpage";
+        }else {
+            model.addAttribute("lstUser", lstUser);
+            return "adminpage";
+        }
     }
 }
