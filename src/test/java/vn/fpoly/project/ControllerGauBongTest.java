@@ -73,14 +73,6 @@ public class ControllerGauBongTest {
                 .andExpect(view().name("admin/qlkm"));
     }
 
-    // ===== ADMIN QLKH =====
-    @Test
-    public void testAdminQLKH() throws Exception {
-        mockMvc.perform(get("/admin/qlkh"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("qltk"));
-    }
-
     // ===== ADMIN QLNV =====
     @Test
     public void testAdminQLNV() throws Exception {

@@ -55,11 +55,6 @@ public class ControllerGauBong {
         return "admin/qlkm";
     }
 
-    @GetMapping("/admin/qlkh")
-    public String customers() {
-        return "qltk";
-    }
-
     @GetMapping("/admin/qlnv")
     public String employees() {
         return "admin/qlnv";

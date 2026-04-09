@@ -22,7 +22,6 @@ public class sanphamhoadonControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    // ✅ CHỈ ĐỂ 1 productRepo
     @MockBean private productRepo repo;
     @MockBean private voucherRepo voucher;
     @MockBean private userRepo userRepo;
@@ -52,7 +51,6 @@ public class sanphamhoadonControllerTest {
         products p = new products();
         p.price = 100f;
 
-        // ✅ dùng repo luôn (không dùng productrepo nữa)
         when(repo.findById(1)).thenReturn(Optional.of(p));
         when(userRepo.findAll()).thenReturn(new ArrayList<>());
         when(invoicesrepo.findAll()).thenReturn(new ArrayList<>());
