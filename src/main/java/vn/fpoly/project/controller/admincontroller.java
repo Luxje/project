@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import vn.fpoly.project.model.*;
 import vn.fpoly.project.repo.*;
+import vn.fpoly.project.service.StatisticService;
 import vn.fpoly.project.service.UserService;
 
 import java.util.List;
@@ -19,13 +20,15 @@ public class admincontroller {
     final private invoicesRepo repoinvoice;
     final private voucherRepo vrepo;
     final private UserService userService;
+    final private StatisticService statisticService;
 
-    public admincontroller(productRepo repo, invoicesRepo repoinvoice, voucherRepo vrepo, userRepo urepo, UserService userService) {
+    public admincontroller(productRepo repo, invoicesRepo repoinvoice, voucherRepo vrepo, userRepo urepo, UserService userService, StatisticService statisticService) {
         this.repo = repo;
         this.repoinvoice = repoinvoice;
         this.vrepo = vrepo;
         this.urepo = urepo;
         this.userService = userService;
+        this.statisticService = statisticService;
     }
 
     @GetMapping("/page")
@@ -206,8 +209,12 @@ public class admincontroller {
     }
 
 
-    @GetMapping("/tkdt")
-    public String statistical() {
+    @GetMapping("/qldt")
+    public String statistical(Model model) {
+        List<invoices> lstInvoice = statisticService.getAll();
+        model.addAttribute("totalRevenue", statisticService.caculateRevenue(lstInvoice));
+
+
         return "/admin/tkdt";
     }
 
