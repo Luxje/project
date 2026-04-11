@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Quản lý khách hàng</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" th:href="@{/css/admin.css}">
+</head>
+
+<body>
+
+<div class="container-fluid">
+  <div class="row">
+
+    <!-- SIDEBAR -->
+    <div class="col-md-2 sidebar">
+      <h4>ADMIN</h4>
+
+      <a th:href="@{/admin/qlsp}">Quản lý sản phẩm</a>
+      <a th:href="@{/admin/qlkm}">Quản lý khuyến mãi</a>
+      <a th:href="@{/admin/qltk}" class="active">Quản lý tài khoản </a>
+      <a th:href="@{/admin/qlnv}">Quản lý nhân viên</a>
+      <a th:href="@{/admin/qlhd}">Quản lý hóa đơn</a>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="col-md-10 content">
+
+      <h3 class="title">Quản lý khách hàng</h3>
+
+      <!-- FORM -->
+      <form method="post" th:object="${user}">
+        <div class="card card-custom mb-4">
+          <div class="card-body">
+            <div class="row g-3">
+
+              <input type="hidden" th:field="*{id}">
+
+              <div class="col-md-3">
+                <label class="form-label">Họ tên</label>
+                <input type="text" th:field="*{name}" class="form-control" placeholder="Tên">
+              </div>
+
+              <div class="col-md-2">
+                <label class="form-label">Vai trò</label>
+                <select th:field="*{role}" class="form-select">
+                  <option value="">-- Vai trò --</option>
+                  <option value="ADMIN">ADMIN</option>
+                  <option value="STAFF">STAFF</option>
+                  <option value="CUSTOMER">CUSTOMER</option>
+                </select>
+              </div>
+
+              <div class="col-md-2">
+                <label class="form-label">SĐT</label>
+                <input type="text" th:field="*{phone}" class="form-control" placeholder="SĐT">
+              </div>
+
+              <div class="col-md-3">
+                <label class="form-label">Địa chỉ</label>
+                <input type="text" th:field="*{address}" class="form-control" placeholder="Địa chỉ">
+              </div>
+
+              <div class="col-md-1">
+                <label class="form-label">Tuổi</label>
+                <input type="number" th:field="*{age}" class="form-control">
+              </div>
+
+              <div class="col-md-1">
+                <label class="form-label">Giới tính</label>
+                <select th:field="*{gender}" class="form-select">
+                  <option value="true">Nam</option>
+                  <option value="false">Nữ</option>
+                </select>
+              </div>
+
+              <div class="col-md-3">
+                <label class="form-label">Mật khẩu</label>
+                <input type="password" th:field="*{password}" class="form-control" placeholder="Mật khẩu">
+              </div>
+            </div>
+
+            <div class="mt-4">
+              <button class="btn btn-success" th:formaction="@{/admin/qltk/add}">Thêm mới</button>
+
+              <button class="btn btn-warning" th:if="*{id != null}" th:formaction="@{/admin/qltk/update}">Cập nhật</button>
+
+              <a href="/admin/qltk" class="btn btn-secondary">Làm mới</a>
+            </div>
+          </div>
+        </div>
+      </form>
+      <div class="mb-3 d-flex justify-content-end">
+        <input type="text" id="searchInput"
+               class="form-control w-25"
+               placeholder="Tìm kiếm..."
+               onkeyup="searchTable()">
+      </div>
+
+      <!-- TABLE -->
+      <div class="card card-custom">
+        <div class="card-body">
+
+          <table class="table table-hover text-center">
+            <thead>
+            <tr>
+              <th>ID</th>
+              <th>Tên</th>
+              <th>Role</th>
+              <th>SĐT</th>
+              <th>Địa chỉ</th>
+              <th>Tuổi</th>
+              <th>Giới tính</th>
+              <th>Action</th>
+            </tr>
+            </thead>
+            <tbody id="customerTable">
+            <tr th:each="tk : ${lstTK}">
+              <td th:text="${tk.id}"></td>
+              <td th:text="${tk.name}"></td>
+              <td th:text="${tk.role}"></td>
+              <td th:text="${tk.phone}"></td>
+              <td th:text="${tk.address}"></td>
+              <td th:text="${tk.age}"></td>
+              <td th:text="${tk.gender? 'Nam' : 'Nu'}"></td>
+              <td>
+                <a th:href="@{/admin/qltk/delete/{id}(id=${tk.id})}"><button class="btn btn-danger">Delete</button></a>
+                <a th:href="@{/admin/qltk/detail/{id}(id=${tk.id})}"><button class="btn btn-warning">Detail</button></a>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<script>
+
+  // ===== VALIDATE =====
+  function validateUser(name, role, phone, age, password) {
+    if (name.trim() === "") return "Không được để trống tên!";
+    if (role === "") return "Chọn vai trò!";
+    if (phone.length < 9) return "SĐT không hợp lệ!";
+    if (age < 0) return "Tuổi không hợp lệ!";
+    if (password.trim() === "") return "Nhập mật khẩu!";
+    return "";
+  }
+
+  // ===== CLEAR =====
+  function clearForm() {
+    document.getElementById("name").value = "";
+    document.getElementById("role").value = "";
+    document.getElementById("phone").value = "";
+    document.getElementById("address").value = "";
+    document.getElementById("age").value = "";
+    document.getElementById("gender").value = "";
+    document.getElementById("password").value = "";
+  }
+</script>
+
+</body>
+</html>

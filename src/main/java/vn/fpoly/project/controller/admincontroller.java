@@ -6,9 +6,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import vn.fpoly.project.model.*;
 import vn.fpoly.project.repo.*;
+import vn.fpoly.project.service.StatisticService;
 import vn.fpoly.project.service.UserService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -20,13 +20,15 @@ public class admincontroller {
     final private invoicesRepo repoinvoice;
     final private voucherRepo vrepo;
     final private UserService userService;
+    final private StatisticService statisticService;
 
-    public admincontroller(productRepo repo, invoicesRepo repoinvoice, voucherRepo vrepo, userRepo urepo, UserService userService) {
+    public admincontroller(productRepo repo, invoicesRepo repoinvoice, voucherRepo vrepo, userRepo urepo, UserService userService, StatisticService statisticService) {
         this.repo = repo;
         this.repoinvoice = repoinvoice;
         this.vrepo = vrepo;
         this.urepo = urepo;
         this.userService = userService;
+        this.statisticService = statisticService;
     }
 
     @GetMapping("/page")
@@ -105,6 +107,16 @@ public class admincontroller {
         return "redirect:/admin/staff";
     }
 
+
+    @GetMapping("/account")
+    public String account(Model model) {
+        model.addAttribute("listAccount", urepo.findAll());
+        return "quanlytaikhoan";
+    }
+
+
+
+
     @GetMapping("/page/search")
     public String search(Model model,@RequestParam("keyword") String name){
         model.addAttribute("listProduct",repo.searchproduct(name));
@@ -115,13 +127,114 @@ public class admincontroller {
 
     @GetMapping("/user/search")
     public String search(@RequestParam("search") String searchInput, Model model) {
-        List<user> lstUser = userService.findUserByName(searchInput);
-        if (lstUser == null){
+        List<user> lstTK = userService.findUserByName(searchInput);
+        if (lstTK == null){
             model.addAttribute("message", "Không tìm thấy nhân viên với tên: " + searchInput);
-            return "adminpage";
+            return "/admin/qltk";
         }else {
-            model.addAttribute("lstUser", lstUser);
-            return "adminpage";
+            model.addAttribute("lstTK", lstTK);
+            return "/admin/qltk";
         }
     }
+
+
+    @GetMapping("/qltk")
+    public String qltk(Model model) {
+        model.addAttribute("lstTK", userService.findAll());
+        model.addAttribute("user", new user());
+        return "/admin/qltk";
+    }
+
+    @PostMapping("/qltk/add")
+    public String addUser(@RequestParam("name") String name,
+                          @RequestParam("phone") String phone,
+                          @RequestParam("address") String address,
+                          @RequestParam("age") int age,
+                          @RequestParam("gender") boolean gender,
+                          @RequestParam("role") String role,
+                          @RequestParam("password") String password, Model model) {
+
+        user u = new user(null, name, role, phone, address, age, gender, password);
+        if (userService.add(u)) {
+            model.addAttribute("message", "Thêm nhân viên thành công");
+            return "redirect:/admin/qltk";
+        }else {
+            model.addAttribute("message", "Thêm nhân viên thất bại");
+            return "/admin/qltk";
+        }
+    }
+
+    @GetMapping("/qltk/delete/{id}")
+    public String deleteUser(@PathVariable("id") int id, Model model) {
+
+        if (userService.delete(id)) {
+            model.addAttribute("message", "Xóa nhân viên thành công");
+            return "redirect:/admin/qltk";
+        }else {
+            model.addAttribute("message", "Xóa nhân viên thất bại");
+            return "redirect:/admin/qltk";
+        }
+    }
+
+    @GetMapping("/qltk/detail/{id}")
+    public String detailUser(@PathVariable("id") int id ,Model model) {
+        user us = userService.findById(id);
+        model.addAttribute("lstTK", userService.findAll());
+        model.addAttribute("user", us);
+        return "/admin/qltk";
+    }
+
+
+    @PostMapping("/qltk/update")
+    public String updateUser(@ModelAttribute("user") user u, Model model) {
+        if (userService.update(u)) {
+            return "redirect:/admin/qltk";
+        } else {
+            model.addAttribute("message", "Cập nhật thất bại!");
+            model.addAttribute("lstTK", userService.findAll());
+            return "admin/qltk";
+        }
+    }
+
+
+    @GetMapping("/qltk/search")
+    public String searchUser(@RequestParam("searchInput") String searchInput, Model model) {
+        if (searchInput == null) {
+            model.addAttribute("message", "Không tìm thấy nhân viên nào với tên:" + searchInput);
+            return "/admin/qltk";
+        }else {
+            model.addAttribute("lstTK", userService.findUserByName(searchInput));
+            return "/admin/qltk";
+        }
+    }
+
+
+    @GetMapping("/qldt")
+    public String statistical(Model model) {
+        List<invoices> lstInvoice = statisticService.getAll();
+        List<invoices> lstInvoiceToday = statisticService.getAllToDay();
+        model.addAttribute("todayRevenue", statisticService.caculateRevenuePrice(lstInvoiceToday));
+        model.addAttribute("totalRevenue", statisticService.caculateRevenuePrice(lstInvoice));
+        model.addAttribute("totalOrders", lstInvoice.size());
+
+        return "/admin/tkdt";
+    }
+
+    @GetMapping("/qldt/sort")
+    public String sortByDay(@RequestParam("startDate") String startDate,
+                            @RequestParam("endDate") String endDate, Model model) {
+
+        model.addAttribute("revenueList", statisticService.getAllInTime(startDate, endDate));
+        List<invoices> lstInvoice = statisticService.getAll();
+        List<invoices> lstInvoiceToday = statisticService.getAllToDay();
+        model.addAttribute("todayRevenue", statisticService.caculateRevenuePrice(lstInvoiceToday));
+        model.addAttribute("totalRevenue", statisticService.caculateRevenuePrice(lstInvoice));
+        model.addAttribute("totalOrders", lstInvoice.size());
+
+        return "/admin/tkdt";
+
+    }
+
+
+
 }

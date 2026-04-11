@@ -8,5 +8,12 @@ import java.util.List;
 public interface userRepo extends JpaRepository<user,Integer> {
     public user findByPhone(String phone);
 
+    public user findById(int id);
+
     public List<user> findByNameContaining(String name);
+
+    public boolean existsByPhone(String phone);
+
+    public boolean existsById(int id);
+
 }
