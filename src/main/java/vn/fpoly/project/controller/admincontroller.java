@@ -138,6 +138,7 @@ public class admincontroller {
     @GetMapping("/qltk")
     public String qltk(Model model) {
         model.addAttribute("lstTK", userService.findAll());
+        model.addAttribute("user", new user());
         return "/admin/qltk";
     }
 
@@ -160,8 +161,8 @@ public class admincontroller {
         }
     }
 
-    @DeleteMapping("/qltk/delete")
-    public String deleteUser(@RequestParam("id") int id, Model model) {
+    @GetMapping("/qltk/delete/{id}")
+    public String deleteUser(@PathVariable("id") int id, Model model) {
 
         if (userService.delete(id)) {
             model.addAttribute("message", "Xóa nhân viên thành công");
@@ -172,31 +173,23 @@ public class admincontroller {
         }
     }
 
-    @GetMapping("/qltk/detali/{id}")
+    @GetMapping("/qltk/detail/{id}")
     public String detailUser(@PathVariable("id") int id ,Model model) {
         user us = userService.findById(id);
+        model.addAttribute("lstTK", userService.findAll());
         model.addAttribute("user", us);
         return "/admin/qltk";
     }
 
 
     @PostMapping("/qltk/update")
-    public String updateUser(@RequestParam int id,
-                             @RequestParam("name") String name,
-                             @RequestParam("phone") String phone,
-                             @RequestParam("address") String address,
-                             @RequestParam("age") int age,
-                             @RequestParam("gender") boolean gender,
-                             @RequestParam("role") String role,
-                             @RequestParam("password") String password, Model model) {
-
-        user u = new user(id, name, role, phone, address, age, gender, password);
+    public String updateUser(@ModelAttribute("user") user u, Model model) {
         if (userService.update(u)) {
-            model.addAttribute("message", "Cập nhật thông tin tài khoản thành công");
             return "redirect:/admin/qltk";
-        }else {
-            model.addAttribute("message", "Cập nhật thông tin thất bại");
-            return "redirect:/admin/qltk";
+        } else {
+            model.addAttribute("message", "Cập nhật thất bại!");
+            model.addAttribute("lstTK", userService.findAll());
+            return "admin/qltk";
         }
     }
 
