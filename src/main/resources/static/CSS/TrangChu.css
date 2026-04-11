@@ -345,3 +345,18 @@ nav input {
     object-fit: cover;
 }
 
+/* ===== FIX FOOTER LUÔN Ở DƯỚI ===== */
+html, body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+/* phần nội dung chính */
+.container {
+    flex: 1;
+}
+

@@ -1,0 +1,140 @@
+/* ===== ROOT (màu chủ đạo) ===== */
+:root {
+    --main-bg: #f5e6d3;
+    --main-color: #5a3e2b;
+    --accent: #d8c3a5;
+    --accent-hover: #cbb08d;
+}
+
+/* ===== BODY ===== */
+body {
+    background-color: #faf7f2;
+}
+
+/* ===== CART INFO ===== */
+.cart-info {
+    background-color: #fff;
+    border-radius: 15px;
+    padding: 20px;
+    color: var(--main-color);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.cart-info h2 {
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.cart-info p {
+    margin: 5px 0;
+}
+
+/* ===== TABLE ===== */
+.cart-table {
+    background: #fff;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* header */
+.cart-table thead {
+    background-color: var(--main-bg);
+    color: var(--main-color);
+}
+
+/* row hover */
+.cart-table tbody tr {
+    transition: 0.3s;
+}
+
+.cart-table tbody tr:hover {
+    background-color: #faf3ea;
+}
+
+/* ===== IMAGE ===== */
+.cart-img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+/* ===== QUANTITY ===== */
+.qty-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+.qty-box input {
+    width: 50px;
+    text-align: center;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+/* nút + - */
+.qty-btn {
+    background-color: var(--accent);
+    border: none;
+    color: var(--main-color);
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    transition: 0.3s;
+    font-weight: bold;
+}
+
+.qty-btn:hover {
+    background-color: var(--accent-hover);
+}
+
+/* ===== REMOVE BUTTON ===== */
+.btn-remove {
+    background-color: #e57373;
+    border: none;
+    color: white;
+    padding: 5px 12px;
+    border-radius: 15px;
+    transition: 0.3s;
+}
+
+.btn-remove:hover {
+    background-color: #d32f2f;
+}
+
+/* ===== SUMMARY ===== */
+.cart-summary {
+    color: var(--main-color);
+    font-weight: 500;
+}
+
+/* ===== BUY BUTTON ===== */
+.btn-buy {
+    background-color: var(--accent);
+    border: none;
+    color: var(--main-color);
+    font-weight: 500;
+    border-radius: 25px;
+    padding: 10px 25px;
+    transition: 0.3s;
+}
+
+.btn-buy:hover {
+    background-color: var(--accent-hover);
+    color: #000;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .cart-img {
+        width: 60px;
+        height: 60px;
+    }
+
+    .qty-box input {
+        width: 40px;
+    }
+}

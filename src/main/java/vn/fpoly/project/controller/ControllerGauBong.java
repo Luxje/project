@@ -21,9 +21,9 @@ public class ControllerGauBong {
     }
 
 
-    @GetMapping("/giohang")
-    public String giohang() {
-        return "giohang";
+    @GetMapping("/cart")
+    public String cart() {
+        return "client/cart";
     }
 
     @GetMapping("/sanpham")
