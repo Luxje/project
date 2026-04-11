@@ -8,6 +8,7 @@ import vn.fpoly.project.model.*;
 import vn.fpoly.project.repo.*;
 import vn.fpoly.project.service.StatisticService;
 import vn.fpoly.project.service.UserService;
+import vn.fpoly.project.service.VoucherService;
 
 import java.util.List;
 
@@ -19,14 +20,16 @@ public class admincontroller {
     final private userRepo urepo;
     final private invoicesRepo repoinvoice;
     final private voucherRepo vrepo;
+    final private VoucherService voucherService;
     final private UserService userService;
     final private StatisticService statisticService;
 
-    public admincontroller(productRepo repo, invoicesRepo repoinvoice, voucherRepo vrepo, userRepo urepo, UserService userService, StatisticService statisticService) {
+    public admincontroller(productRepo repo, invoicesRepo repoinvoice, voucherRepo vrepo, userRepo urepo, VoucherService voucherService, UserService userService, StatisticService statisticService) {
         this.repo = repo;
         this.repoinvoice = repoinvoice;
         this.vrepo = vrepo;
         this.urepo = urepo;
+        this.voucherService = voucherService;
         this.userService = userService;
         this.statisticService = statisticService;
     }
@@ -192,7 +195,7 @@ public class admincontroller {
         } else {
             model.addAttribute("message", "Cập nhật thất bại!");
             model.addAttribute("lstTK", userService.findAll());
-            return "admin/qltk";
+            return "redirect:/admin/qltk";
         }
     }
 
@@ -217,7 +220,7 @@ public class admincontroller {
         model.addAttribute("totalRevenue", statisticService.caculateRevenuePrice(lstInvoice));
         model.addAttribute("totalOrders", lstInvoice.size());
 
-        return "/admin/tkdt";
+        return "/admin/qldt";
     }
 
     @GetMapping("/qldt/sort")
@@ -231,10 +234,44 @@ public class admincontroller {
         model.addAttribute("totalRevenue", statisticService.caculateRevenuePrice(lstInvoice));
         model.addAttribute("totalOrders", lstInvoice.size());
 
-        return "/admin/tkdt";
+        return "/admin/qldt";
 
     }
 
 
+    @GetMapping("/qlkm")
+    public String voucher(Model model) {
+        model.addAttribute("voucher", new voucher());
+        model.addAttribute("lstVoucher", voucherService.getAll());
+        return "/admin/qlkm";
+    }
 
+    @PostMapping("/qlkm/add")
+    public String addVoucher(@ModelAttribute("voucher") voucher voucher, Model model) {
+        voucherService.voucherAdd(voucher);
+        model.addAttribute("lstVoucher", voucherService.getAll());
+        return "redirect:/admin/qlkm";
+    }
+
+    @GetMapping("/qlkm/remove/{id}")
+    public String removeVoucher(@PathVariable("id") int id, Model model) {
+        voucherService.voucherRemove(id);
+        model.addAttribute("lstVoucher", voucherService.getAll());
+        return "redirect:/admin/qlkm";
+    }
+
+    @GetMapping("/qlkm/detail/{id}")
+    public String detailVoucher(@PathVariable("id") int id, Model model) {
+        model.addAttribute("voucher", voucherService.getById(id));
+        model.addAttribute("lstVoucher", voucherService.getAll());
+        return "/admin/qlkm";
+    }
+
+
+    @PostMapping("/qlkm/edit")
+    public String updateVoucher(@ModelAttribute("voucher") voucher voucher, Model model) {
+
+        voucherService.voucherAdd(voucher);
+        return "redirect:/admin/qlkm";
+    }
 }
