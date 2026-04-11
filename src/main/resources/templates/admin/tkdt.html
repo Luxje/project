@@ -54,50 +54,21 @@
             <h5 th:text="${totalOrders}"></h5>
           </div>
         </div>
-
-        <div class="col-md-2">
-          <div class="card card-custom text-center p-3">
-            <p>Đã thanh toán</p>
-            <h5 th:text="${paidOrders}"></h5>
-          </div>
-        </div>
-
-        <div class="col-md-2">
-          <div class="card card-custom text-center p-3">
-            <p>Chưa thanh toán</p>
-            <h5 th:text="${unpaidOrders}"></h5>
-          </div>
-        </div>
-
-        <div class="col-md-2">
-          <div class="card card-custom text-center p-3">
-            <p>Tăng trưởng</p>
-            <h5 th:text="${growth} + '%'"></h5>
-          </div>
-        </div>
-
       </div>
 
       <!-- ===== FILTER ===== -->
-      <div class="card card-custom mb-4">
+      <form method="post" th:action="@{/admin/qldt/sort}" class="card card-custom mb-4">
         <div class="card-body">
           <div class="row g-3">
 
             <div class="col-md-3">
-              <input type="date" class="form-control">
+              <input type="date" name="startDate" class="form-control">
             </div>
 
             <div class="col-md-3">
-              <input type="date" class="form-control">
+              <input type="date" name="startDate" class="form-control">
             </div>
 
-            <div class="col-md-3">
-              <select class="form-control">
-                <option value="">-- Trạng thái --</option>
-                <option>Đã thanh toán</option>
-                <option>Chưa thanh toán</option>
-              </select>
-            </div>
 
             <div class="col-md-3">
               <button class="btn btn-add w-100">Lọc</button>
@@ -105,15 +76,8 @@
 
           </div>
         </div>
-      </div>
+      </form>
 
-      <!-- ===== CHART ===== -->
-      <div class="card card-custom mb-4">
-        <div class="card-body">
-          <h5 class="mb-3">Biểu đồ doanh thu</h5>
-          <canvas id="revenueChart"></canvas>
-        </div>
-      </div>
 
       <!-- ===== TABLE DOANH THU ===== -->
       <div class="card card-custom mb-4">
@@ -132,35 +96,9 @@
 
             <tbody>
             <tr th:each="item : ${revenueList}">
-              <td th:text="${item.time}"></td>
-              <td th:text="${item.amount}"></td>
-              <td th:text="${item.orders}"></td>
-            </tr>
-            </tbody>
-
-          </table>
-
-        </div>
-      </div>
-
-      <!-- ===== TOP PRODUCT ===== -->
-      <div class="card card-custom">
-        <div class="card-body">
-
-          <h5 class="mb-3">Top sản phẩm bán chạy</h5>
-
-          <table class="table table-hover text-center">
-            <thead>
-            <tr>
-              <th>Sản phẩm</th>
-              <th>Số lượng</th>
-            </tr>
-            </thead>
-
-            <tbody>
-            <tr th:each="p : ${topProducts}">
-              <td th:text="${p.name}"></td>
-              <td th:text="${p.quantity}"></td>
+              <td th:text="${item.date}"></td>
+              <td th:text="${item.price}"></td>
+              <td th:text="${item.customerid}"></td>
             </tr>
             </tbody>
 

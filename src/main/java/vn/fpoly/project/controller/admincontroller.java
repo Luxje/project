@@ -212,10 +212,27 @@ public class admincontroller {
     @GetMapping("/qldt")
     public String statistical(Model model) {
         List<invoices> lstInvoice = statisticService.getAll();
-        model.addAttribute("totalRevenue", statisticService.caculateRevenue(lstInvoice));
-
+        List<invoices> lstInvoiceToday = statisticService.getAllToDay();
+        model.addAttribute("todayRevenue", statisticService.caculateRevenuePrice(lstInvoiceToday));
+        model.addAttribute("totalRevenue", statisticService.caculateRevenuePrice(lstInvoice));
+        model.addAttribute("totalOrders", lstInvoice.size());
 
         return "/admin/tkdt";
+    }
+
+    @GetMapping("/qldt/sort")
+    public String sortByDay(@RequestParam("startDate") String startDate,
+                            @RequestParam("endDate") String endDate, Model model) {
+
+        model.addAttribute("revenueList", statisticService.getAllInTime(startDate, endDate));
+        List<invoices> lstInvoice = statisticService.getAll();
+        List<invoices> lstInvoiceToday = statisticService.getAllToDay();
+        model.addAttribute("todayRevenue", statisticService.caculateRevenuePrice(lstInvoiceToday));
+        model.addAttribute("totalRevenue", statisticService.caculateRevenuePrice(lstInvoice));
+        model.addAttribute("totalOrders", lstInvoice.size());
+
+        return "/admin/tkdt";
+
     }
 
 
