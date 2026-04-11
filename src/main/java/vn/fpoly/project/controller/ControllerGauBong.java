@@ -74,4 +74,9 @@ public class ControllerGauBong {
     public String thongke() {
         return "admin/tkdt";
     }
+
+    @GetMapping("/staff/bhtq")
+    public String bhtq() {
+        return "staff/bhtq";
+    }
 }

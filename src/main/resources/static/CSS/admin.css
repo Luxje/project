@@ -118,3 +118,36 @@ canvas {
     color: #777;
     margin-bottom: 5px;
 }
+
+/* ===== SEARCH BOX ===== */
+.search-box {
+    position: relative;
+    width: 250px;
+}
+
+/* INPUT */
+.search-box input {
+    width: 100%;
+    padding: 8px 35px 8px 15px;
+    border-radius: 20px;
+    border: 1px solid #d8c3a5;
+    outline: none;
+    transition: 0.3s;
+}
+
+/* FOCUS */
+.search-box input:focus {
+    border-color: #5a3e2b;
+    box-shadow: 0 0 5px rgba(90, 62, 43, 0.3);
+}
+
+/* ICON */
+.search-icon {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 14px;
+    color: #5a3e2b;
+}
