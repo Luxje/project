@@ -104,4 +104,32 @@ public class admincontroller {
         model.addAttribute("product",new products());
         return "adminpage";
     }
+
+    @GetMapping("/khuyenmai")
+    public String listvoucher(Model model){
+
+        model.addAttribute("list",vrepo.findAll());
+        model.addAttribute("voucher",new voucher());
+       return "adminvoucher";
+    }
+
+    @PostMapping ("/savevoucher")
+    public String save(voucher v){
+        vrepo.save(v);
+        return "redirect:/admin/khuyenmai";
+    }
+    @GetMapping("/voucherdelete")
+    public String delete(@RequestParam("id") int id){
+        vrepo.deleteById(id);
+        return "redirect:/admin/khuyenmai";
+    }
+    @GetMapping("/voucherupdate")
+    public String voucherupdate(Model model,@RequestParam("id") int id){
+        model.addAttribute("list",vrepo.findAll());
+        model.addAttribute("voucher",vrepo.findById(id).orElse(null));
+        return "adminvoucher";
+    }
+
+
+
 }
