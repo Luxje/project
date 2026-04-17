@@ -4,11 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import vn.fpoly.project.Service.UserService;
 import vn.fpoly.project.model.*;
 import vn.fpoly.project.repo.*;
 
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
@@ -16,6 +15,9 @@ public class admincontroller {
 
     @Autowired
     productRepo repo;
+
+    @Autowired
+    UserService userService;
 
     @GetMapping("/page")
     public String page(Model model) {
@@ -130,6 +132,74 @@ public class admincontroller {
         return "adminvoucher";
     }
 
+    @GetMapping("/qltk")
+    public String qltk(Model model) {
+        model.addAttribute("lstTK", userService.findAll());
+        model.addAttribute("user", new user());
+        return "qltk";
+    }
 
+    @PostMapping("/qltk/add")
+    public String addUser(@RequestParam("name") String name,
+                          @RequestParam("phone") String phone,
+                          @RequestParam("address") String address,
+                          @RequestParam("age") int age,
+                          @RequestParam("gender") boolean gender,
+                          @RequestParam("role") String role,
+                          @RequestParam("password") String password, Model model) {
+
+        user u = new user(null, name, role, phone, address, age, gender, password);
+        if (userService.add(u)) {
+            model.addAttribute("message", "Thêm nhân viên thành công");
+            return "redirect:/admin/qltk";
+        }else {
+            model.addAttribute("message", "Thêm nhân viên thất bại");
+            return "qltk";
+        }
+    }
+
+    @GetMapping("/qltk/delete/{id}")
+    public String deleteUser(@PathVariable("id") int id, Model model) {
+
+        if (userService.delete(id)) {
+            model.addAttribute("message", "Xóa nhân viên thành công");
+            return "redirect:/admin/qltk";
+        }else {
+            model.addAttribute("message", "Xóa nhân viên thất bại");
+            return "redirect:/admin/qltk";
+        }
+    }
+
+    @GetMapping("/qltk/detail/{id}")
+    public String detailUser(@PathVariable("id") int id ,Model model) {
+        user us = userService.findById(id);
+        model.addAttribute("lstTK", userService.findAll());
+        model.addAttribute("user", us);
+        return "qltk";
+    }
+
+
+    @PostMapping("/qltk/update")
+    public String updateUser(@ModelAttribute("user") user u, Model model) {
+        if (userService.update(u)) {
+            return "redirect:/admin/qltk";
+        } else {
+            model.addAttribute("message", "Cập nhật thất bại!");
+            model.addAttribute("lstTK", userService.findAll());
+            return "redirect:/admin/qltk";
+        }
+    }
+
+
+    @GetMapping("/qltk/search")
+    public String searchUser(@RequestParam("searchInput") String searchInput, Model model) {
+        if (searchInput == null) {
+            model.addAttribute("message", "Không tìm thấy nhân viên nào với tên:" + searchInput);
+            return "qltk";
+        }else {
+            model.addAttribute("lstTK", userService.findUserByName(searchInput));
+            return "qltk";
+        }
+    }
 
 }

@@ -1,0 +1,153 @@
+body {
+    background-color: #f5f5f5;
+}
+
+/* ===== SIDEBAR ===== */
+.sidebar {
+    height: 100vh;
+    background: deeppink;
+    color: #fff;
+    padding: 20px;
+}
+
+.sidebar h4 {
+    margin-bottom: 30px;
+    font-weight: bold;
+}
+
+.sidebar a {
+    display: block;
+    color: #fff;
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    transition: 0.3s;
+}
+
+.sidebar a:hover {
+    background: deeppink;
+}
+
+/* ===== CONTENT ===== */
+.content {
+    padding: 30px;
+}
+
+/* TITLE */
+.title {
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* CARD */
+.card-custom {
+    border-radius: 15px;
+    border: none;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* BUTTON */
+.btn-add {
+    background: pink;
+    color: deeppink;
+    border-radius: 10px;
+}
+
+.btn-edit {
+    background: pink;
+    color: #fff;
+    border-radius: 10px;
+}
+
+.btn-delete {
+    background: deeppink;
+    color: #fff;
+    border-radius: 10px;
+}
+
+.btn:hover {
+    opacity: 0.9;
+}
+
+/* TABLE */
+.table th {
+    background: #f5e6d3;
+}
+
+.sidebar a.active {
+    background: pink;
+    color: deeppink;
+    font-weight: bold;
+}
+
+/* SEARCH */
+#searchInput {
+    border-radius: 20px;
+    border: 1px solid pink;
+    padding: 8px 15px;
+}
+
+#searchInput:focus {
+    border-color: deeppink;
+    box-shadow: 0 0 5px hotpink;
+}
+
+/* ===== DASHBOARD EXTRA ===== */
+.card-custom h5 {
+    color: deeppink;
+    font-weight: bold;
+}
+
+/* CHART */
+canvas {
+    max-height: 300px;
+}
+
+/* HOVER CARD NHẸ */
+.card-custom:hover {
+    transform: translateY(-3px);
+    transition: 0.2s;
+}
+
+/* TEXT NHỎ TRONG CARD */
+.card-custom p {
+    font-size: 14px;
+    color: #777;
+    margin-bottom: 5px;
+}
+
+/* ===== SEARCH BOX ===== */
+.search-box {
+    position: relative;
+    width: 250px;
+}
+
+/* INPUT */
+.search-box input {
+    width: 100%;
+    padding: 8px 35px 8px 15px;
+    border-radius: 20px;
+    border: 1px solid pink;
+    outline: none;
+    transition: 0.3s;
+}
+
+/* FOCUS */
+.search-box input:focus {
+    border-color: deeppink;
+    box-shadow: 0 0 5px hotpink;
+}
+
+/* ICON */
+.search-icon {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 14px;
+    color: deeppink;
+}

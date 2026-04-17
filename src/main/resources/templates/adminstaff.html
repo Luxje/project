@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Quản lý nhân viên</title>
@@ -116,9 +117,12 @@
 
 <!-- SIDEBAR -->
 <div class="sidebar">
-    <a th:href="@{/admin/product}">Sản phẩm</a>
-    <a th:href="@{/admin/invoice}">Hóa đơn</a>
-    <a th:href="@{/admin/staff}">Nhân viên</a>
+    <a th:href="@{/admin/page}">Quản lý sản phẩm</a>
+    <a th:href="@{/admin/khuyenmai}">Quản lý khuyến mãi</a>
+    <a th:href="@{/admin/qltk}">Quản lý tài khoản </a>
+    <a th:href="@{/admin/staff}">Quản lý nhân viên</a>
+    <a th:href="@{/admin/invoice}">Quản lý hóa đơn</a>
+    <a th:href="@{/admin/qldt}">Thống kê</a>
 </div>
 
 <!-- MAIN -->
@@ -138,7 +142,7 @@
             <input type="text" th:field="*{age}" placeholder="age">
 
             <label>
-                <input type="radio" th:field="*{gender}" value="true"> Nm
+                <input type="radio" th:field="*{gender}" value="true"> Nam
             </label>
 
             <label>
