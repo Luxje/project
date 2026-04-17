@@ -220,7 +220,7 @@ public class admincontroller {
         model.addAttribute("totalRevenue", statisticService.caculateRevenuePrice(lstInvoice));
         model.addAttribute("totalOrders", lstInvoice.size());
 
-        return "/admin/qldt";
+        return "/admin/tkdt";
     }
 
     @GetMapping("/qldt/sort")
@@ -234,7 +234,7 @@ public class admincontroller {
         model.addAttribute("totalRevenue", statisticService.caculateRevenuePrice(lstInvoice));
         model.addAttribute("totalOrders", lstInvoice.size());
 
-        return "/admin/qldt";
+        return "/admin/tkdt";
 
     }
 
