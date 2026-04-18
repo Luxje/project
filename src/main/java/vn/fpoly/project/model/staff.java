@@ -15,6 +15,7 @@ import lombok.Setter;
 public class staff {
     @Id
     @Column(name = "staff_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer id;
 
     @Column(name = "staff_phone")

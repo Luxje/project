@@ -19,8 +19,8 @@
 
       <a th:href="@{/admin/qlsp}">Quản lý sản phẩm</a>
       <a th:href="@{/admin/qlkm}">Quản lý khuyến mãi</a>
-      <a th:href="@{/admin/qltk}">Quản lý khách hàng</a>
-      <a th:href="@{/admin/qlnv}" class="active">Quản lý nhân viên</a>
+      <a th:href="@{/admin/qltk}">Quản lý tài khoản</a>
+      <a th:href="@{/admin/staff}" class="active">Quản lý nhân viên</a>
       <a th:href="@{/admin/qlhd}">Quản lý hóa đơn</a>
       <a th:href="@{/admin/qldt}">Thống kê</a>
     </div>
@@ -31,24 +31,42 @@
       <h3 class="title">Quản lý nhân viên</h3>
 
       <!-- FORM -->
-      <div class="card card-custom mb-4">
+      <form  method="post" action="/admin/staff/save" th:object="${staff}" class="card card-custom mb-4">
         <div class="card-body">
+            <div class="col-md-3">
+              <input type="hidden" th:field="*{id}">
+            </div>
 
           <div class="row g-3">
             <div class="col-md-3">
-              <input type="text" id="name" class="form-control" placeholder="Tên nhân viên">
+              <input type="text" id="name" th:field="*{name}" class="form-control" placeholder="Tên nhân viên">
+            </div>
+
+
+            <div class="col-md-3">
+              <input type="text" id="phone" th:field="*{phone}" class="form-control" placeholder="SĐT">
             </div>
 
             <div class="col-md-3">
-              <input type="email" id="email" class="form-control" placeholder="Email">
+              <input type="text" id="address" th:field="*{address}" class="form-control" placeholder="Địa chỉ">
             </div>
 
             <div class="col-md-3">
-              <input type="text" id="phone" class="form-control" placeholder="SĐT">
+              <input type="number" id="age" th:field="*{age}" class="form-control" placeholder="Tuổi">
             </div>
 
             <div class="col-md-3">
-              <input type="text" id="role" class="form-control" placeholder="Chức vụ">
+              <label class="form-label d-block">Giới tính</label>
+
+              <div class="form-check form-check-inline">
+                <input type="radio" th:field="*{gender}" th:value="true" class="form-check-input" id="genderMale">
+                <label class="form-check-label" for="genderMale">Nam</label>
+              </div>
+
+              <div class="form-check form-check-inline">
+                <input type="radio" th:field="*{gender}" th:value="false" class="form-check-input" id="genderFemale">
+                <label class="form-check-label" for="genderFemale">Nữ</label>
+              </div>
             </div>
           </div>
 
@@ -56,13 +74,12 @@
 
           <!-- BUTTON -->
           <div class="mt-3">
-            <button class="btn btn-add" onclick="addEmployee()">Thêm</button>
-            <button class="btn btn-edit" onclick="editEmployee()">Sửa</button>
-            <button class="btn btn-delete" onclick="deleteEmployee()">Xóa</button>
+            <button class="btn btn-add" type="submit">Thêm</button>
+            <button class="btn btn-edit" th:href="@{/admin/staff/edit}">Sửa</button>
           </div>
 
         </div>
-      </div>
+      </form>
 
       <!-- TABLE -->
       <div class="card card-custom">
@@ -72,14 +89,32 @@
             <thead>
             <tr>
               <th>Tên</th>
-              <th>Email</th>
+              <th>Địa chỉ</th>
               <th>SĐT</th>
-              <th>Chức vụ</th>
+              <th>Giới tính</th>
+              <th>Tuổi</th>
+              <th>Action</th>
             </tr>
             </thead>
-            <tbody id="employeeTable"></tbody>
+            <tr th:each="nv : ${listStaff}">
+              <td th:text="${nv.name}"></td>
+              <td th:text="${nv.address}"></td>
+              <td th:text="${nv.phone}"></td>
+              <td th:text="${nv.gender? 'Nam' : 'Nữ'}"></td>
+              <td th:text="${nv.age}"></td>
+              <td>
+                <a th:href="@{/admin/staff/delete/{id}(id=${nv.id})}"
+                   class="btn btn-danger"
+                   onclick="return confirm('Bạn có chắc chắn muốn xóa không?')">
+                  Xóa
+                </a>
+                <a th:href="@{/admin/staff/detail/{id}(id=${nv.id})}"
+                   class="btn btn-warning">
+                  Chi tiết
+                </a>
+              </td>
+            </tr>
           </table>
-
         </div>
       </div>
 
@@ -89,7 +124,6 @@
 </div>
 
 <script>
-  let employees = [];
 
   function validateEmployee(name, email, phone, role) {
     if (name === "") return "Không được để trống tên!";
@@ -99,66 +133,6 @@
     return "";
   }
 
-  function addEmployee() {
-    let name = document.getElementById("name").value;
-    let email = document.getElementById("email").value;
-    let phone = document.getElementById("phone").value;
-    let role = document.getElementById("role").value;
-
-    let error = document.getElementById("error");
-    let check = validateEmployee(name, email, phone, role);
-
-    if (check !== "") {
-      error.innerText = check;
-      return;
-    }
-
-    error.innerText = "";
-
-    employees.push({ name, email, phone, role });
-    render();
-  }
-
-  function deleteEmployee() {
-    employees.pop();
-    render();
-  }
-
-  function editEmployee() {
-    if (employees.length === 0) return;
-
-    let name = document.getElementById("name").value;
-    let email = document.getElementById("email").value;
-    let phone = document.getElementById("phone").value;
-    let role = document.getElementById("role").value;
-
-    let check = validateEmployee(name, email, phone, role);
-
-    if (check !== "") {
-      document.getElementById("error").innerText = check;
-      return;
-    }
-
-    employees[employees.length - 1] = { name, email, phone, role };
-    render();
-  }
-
-  function render() {
-    let table = document.getElementById("employeeTable");
-    table.innerHTML = "";
-
-    employees.forEach(e => {
-      table.innerHTML += `
-            <tr>
-                <td>${e.name}</td>
-                <td>${e.email}</td>
-                <td>${e.phone}</td>
-                <td>${e.role}</td>
-            </tr>
-        `;
-    });
-  }
 </script>
-
 </body>
 </html>
