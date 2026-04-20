@@ -29,9 +29,9 @@ public class UserController {
             if (userService.validateRole(phone).equals("CUSTOMER")) {
                 return "redirect:/";
             }else if (userService.validateRole(phone).equals("ADMIN")) {
-                return "redirect:/admin/page";
+                return "redirect:/admin/qltk";
             }else if (userService.validateRole(phone).equals("STAFF")) {
-                return "redirect:/admin/page";
+                return "redirect:/admin/qltk";
             }
         }
         return "login";
